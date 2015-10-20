@@ -11,6 +11,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
+\usepackage[boxruled]{algorithm2e}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
 \usepackage[utf8]{inputenc}  % für Unix-Systeme
   % ermöglicht die direkte Eingabe von Umlauten und ß
@@ -107,5 +108,49 @@
 \newpage
 
 \section*{Aufgabe 3}
+
+\section*{Aufgabe 4}
+
+\paragraph{Eingabe:} Array aus ganzen Zahlen $\mathbb{Z}$ der Größe n
+
+\paragraph{Ausgabe:} ganze Zahl
+
+\begin{algorithm}[H]
+	
+	smallest = 0\;
+	secondSmallest = 0\;
+	greatest = 0\;
+	secondGreatest = 0\;
+	
+	temp = 0\;
+	
+	\For{number in listOfNumbers}{
+		\If{number > 0}{\
+			\If{number > greatest}{
+				temp = greatest\;
+				greatest = number\;
+				secondGreatest = temp\;	
+			}\Else(number > secondGreatest){
+			secondGreatest = number\;
+			}		
+		}\ElseIf{number < 0}{
+			\If{number < smallest}{
+				temp = smallest\;
+				smallest = number\;
+				secondSmallest= temp\;				
+			}\Else(elif number < secondSmallest){
+				secondSmallest = number\;		
+			}
+		}
+	}
+	\If{greatest*secondGreatest > smallest*secondSmallest}{
+		return greatest*secondGreatest\;
+	}\Else{
+		return smallest*secondSmallest\;
+	}
+
+\end{algorithm}
+
+Der Algorithmus iteriert einmal über das Array der Größe n, die Laufzeit ist also von n abhängig. Pro Iteration werden 14 Schritte ausgeführt. Vor und nach den Iterationen werden insgesamt 9 Schritte ausgeführt. Demzufolge beträgt die Laufzeit $\mathcal{O}(14n+9) = \mathcal{O}(n)$.
 
 \end{document}

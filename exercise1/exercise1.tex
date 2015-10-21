@@ -140,6 +140,27 @@ Die einzige mögliche Lösung für x ist demzufolge $x_1 = 3$.
 \section*{Aufgabe 3}
 \subsection*{a)}
 
+Zu beweisen ist
+
+$ \exists n_0 \forall n \ge n_0: f(n) \le g(n) \rightarrow 2^{f(n)} = \bO{2^{g(n)}} $
+
+Wir probieren nun die linke Seite der Implikation so umzuformen, dass sie äquivalent zur rechten Seite ist. Durch exponentieren erhalten wir
+
+$ 2^{f(n)} \le 2^{g(n)} $
+
+Da die Exponentialfunktion streng monoton steigend ist, ist sichergestellt, dass auch diese Ungleichung für alle $n \ge n_0$ gilt. Nun können wir ein $c \ge 1$ wählen und es mit $2^{g(n)}$ multiplizieren, da es die Aussage der Ungleichung nicht verändert.
+
+$ \exists c,n_0 \forall n \ge n_0: 2^{f(n)} \le c * 2^{g(n)} $
+
+Dies entspricht genau der Landau-Definition, ist also äquivalent zu
+
+$ 2^{f(n)} = \bO{2^{g(n)}} $
+
+Somit haben wir die linke Seite der Implikation so umgeformt, dass sie der rechten Seite entspricht und der Beweis ist abgeschlossen.
+
+$\hfill \square$
+
+
 \subsection*{b)}
 
 Zu beweisen ist

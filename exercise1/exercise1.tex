@@ -144,11 +144,31 @@ Die einzige mögliche Lösung für x ist demzufolge $x_1 = 3$.
 
 Zu beweisen ist
 
-$ 2^{f(n)} = \mathcal{O}(2^{g(n)}) \rightarrow f(n) = \mathcal{O}(g(n)) $
+$ 2^{f(n)} = \bO{2^{g(n)}} \rightarrow f(n) = \bO{g(n)} $
 
 Diese Aussage ist äquivalent zu
 
-$ \exists c,  $
+$ \exists c,n_0 \forall n \ge n_0: 2^{f(n)} \le c * 2^{g(n)} \rightarrow f(n) \le c * g(n) $
+
+Wir probieren nun die linke Seite der Implikation so umzuformen, dass sie äquivalent zur rechten Seite ist. Durch Logarithmieren erhalten wir
+
+$ f(n) \le \log_{2}{c} * g(n) $
+
+Da wir wissen, dass die rechte Seite der Ungleichung größer sein muss als die linke Seite, können wir $c$ mit 1 addieren, da die Aussage nicht verändert wird.
+
+$ f(n) \le \log_{2}{c+1} * g(n) $
+
+Somit ist sichergestellt, dass der Logarithmus von $c$ nicht negativ oder $0$ ist. Dies erlaubt uns $\log_{2}{c+1}$ durch $c'$ zu substituieren.
+
+$ \exists c,n_0 \forall n \ge n_0: f(n) \le c' * g(n)$
+
+Dies entspricht genau der Landau-Definition, ist also äquivalent zu
+
+$ f(n) = \bO{g(n)}$
+
+Somit haben wir die linke Seite der Implikation so umgeformt, dass sie der rechten Seite entspricht und der Beweis ist abgeschlossen.
+
+$\hfill \square$
 
 \newpage
 

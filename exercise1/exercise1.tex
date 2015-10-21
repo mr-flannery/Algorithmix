@@ -11,7 +11,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[boxruled]{algorithm2e}
+\usepackage[boxed]{algorithm2e}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
 \usepackage[utf8]{inputenc}  % für Unix-Systeme
   % ermöglicht die direkte Eingabe von Umlauten und ß
@@ -57,7 +57,7 @@
 % \hoffset-2cm % verschiebt das Textfenster nach links
 % \voffset-5mm % verschiebt das Textfenster nach oben
 %
-%\parindent=0pt %% keine Einzug zu Beginn von Abs\"atzen
+\parindent=0pt %% keine Einzug zu Beginn von Abs\"atzen
 %\parskip=2mm   %% erzeugt einen zusätzliche Zeilenabstand zwischen
                 %% Absätzen. Nötig bei \parindent=0pt
 
@@ -142,50 +142,72 @@ Die einzige mögliche Lösung für x ist demzufolge $x_1 = 3$.
 
 Zu beweisen ist
 
-$ \exists n_0 \forall n \ge n_0: f(n) \le g(n) \rightarrow 2^{f(n)} = \bO{2^{g(n)}} $
+\begin{align}
+	\exists n_0 \forall n \ge n_0: f(n) \le g(n) \rightarrow 2^{f(n)} = \bO{2^{g(n)}} 
+\end{align}
 
 Wir probieren nun die linke Seite der Implikation so umzuformen, dass sie äquivalent zur rechten Seite ist. Durch exponentieren erhalten wir
 
-$ 2^{f(n)} \le 2^{g(n)} $
+\begin{align}
+	2^{f(n)} \le 2^{g(n)}
+\end{align}
 
 Da die Exponentialfunktion streng monoton steigend ist, ist sichergestellt, dass auch diese Ungleichung für alle $n \ge n_0$ gilt. Nun können wir ein $c \ge 1$ wählen und es mit $2^{g(n)}$ multiplizieren, da es die Aussage der Ungleichung nicht verändert.
 
-$ \exists c,n_0 \forall n \ge n_0: 2^{f(n)} \le c * 2^{g(n)} $
+\begin{align}
+	\exists c,n_0 \forall n \ge n_0: 2^{f(n)} \le c * 2^{g(n)}
+\end{align}
 
 Dies entspricht genau der Landau-Definition, ist also äquivalent zu
 
-$ 2^{f(n)} = \bO{2^{g(n)}} $
+\begin{align}
+	2^{f(n)} = \bO{2^{g(n)}}
+\end{align}
 
 Somit haben wir die linke Seite der Implikation so umgeformt, dass sie der rechten Seite entspricht und der Beweis ist abgeschlossen.
 
 $\hfill \square$
 
+\newpage
+\setcounter{equation}{0}
 
 \subsection*{b)}
 
 Zu beweisen ist
 
-$ 2^{f(n)} = \bO{2^{g(n)}} \rightarrow f(n) = \bO{g(n)} $
+\begin{align}
+	2^{f(n)} = \bO{2^{g(n)}} \rightarrow f(n) = \bO{g(n)}
+\end{align}
 
 Diese Aussage ist äquivalent zu
 
-$ \exists c,n_0 \forall n \ge n_0: 2^{f(n)} \le c * 2^{g(n)} \rightarrow f(n) \le c * g(n) $
+\begin{align}
+	\exists c,n_0 \forall n \ge n_0: 2^{f(n)} \le c * 2^{g(n)} \rightarrow f(n) \le c * g(n)
+\end{align}
 
 Wir probieren nun die linke Seite der Implikation so umzuformen, dass sie äquivalent zur rechten Seite ist. Durch Logarithmieren erhalten wir
 
-$ f(n) \le \log_{2}{c} * g(n) $
+\begin{align}
+	f(n) \le \log_{2}{c} * g(n)
+\end{align}
 
 Da wir wissen, dass die rechte Seite der Ungleichung größer sein muss als die linke Seite, können wir $c$ mit 1 addieren, da die Aussage nicht verändert wird.
 
-$ f(n) \le \log_{2}{c+1} * g(n) $
+\begin{align}
+	f(n) \le \log_{2}{c+1} * g(n) 
+\end{align}
 
 Somit ist sichergestellt, dass der Logarithmus von $c$ nicht negativ oder $0$ ist. Dies erlaubt uns $\log_{2}{c+1}$ durch $c'$ zu substituieren.
 
-$ \exists c,n_0 \forall n \ge n_0: f(n) \le c' * g(n)$
+\begin{align}
+	\exists c,n_0 \forall n \ge n_0: f(n) \le c' * g(n)
+\end{align}
 
 Dies entspricht genau der Landau-Definition, ist also äquivalent zu
 
-$ f(n) = \bO{g(n)}$
+\begin{align}
+	f(n) = \bO{g(n)}
+\end{align}
 
 Somit haben wir die linke Seite der Implikation so umgeformt, dass sie der rechten Seite entspricht und der Beweis ist abgeschlossen.
 
@@ -200,7 +222,6 @@ $\hfill \square$
 \paragraph{Ausgabe:} ganze Zahl
 
 \begin{algorithm}[H]
-	
 	smallest = 0\;
 	secondSmallest = 0\;
 	greatest = 0\;

@@ -159,17 +159,11 @@ $\hfill \square$
 \section*{Aufgabe 3}
 \subsection*{Teilaufgabe a)}
 
-Zu zeigen ist, dass es höchstens einen Knoten gibt, der keine ausgehenenden Kanten hat, sprich höchstens eine Mannschaft, die gegen alle anderen gewinnt.
+Zu zeigen ist, dass es höchstens einen Knoten gibt, der keine ausgehenenden Kanten hat, sprich höchstens eine Mannschaft, die gegen alle anderen gewinnt. Äquivalent dazu ist die Aussage, dass es mindestens $n-1$ Knoten gibt, die ausgehende Kanten haben (also mindestens $n-1$ Mannschaften, die mindestens ein Spiel verlieren).
 
-Dies lässt sich zeigen, indem man die Spiele systematisch austragen lässt, sprich den Graphen den systematisch konstruiert.
+Wir betrachten nun für eine beliebige Mannschaft alle Spiele die sie spielt. Dabei wird sich eine beliebige Verteilung von Siegern und Verlierern ergeben. Es gibt jedoch mindestens einen Verlierer, und zwar für dann Fall dass die beliebig gewählte Mannschaft alle Spiele verliert. Das heißt, dass nach der Betrachtung aller Spiele mindestens eine Mannschaft nicht der absolute Sieger sein kann (sprich mindestens ein Knoten ausgehende Kanten hat).
 
-Zu Beginn wird eine Liste mit potentiellen absoluten Gewinnern angelegt. Da noch keine Partie ausgetragen wurde, enthält diese Liste zu Beginn alle Mannschaften. Nun wählt man eine beliebige Mannschaft und lässt diese gegen alle anderen Mannschaften antreten. Danach ergeben sich zwei Möglichkeiten:
-
-Fall 1: die beliebig gewählte Mannschaft gewinnt gegen alle anderen Mannschaften (der beliebig gewählte Knoten hat lediglich eingehende Kanten). Dadurch kann keine der anderen Mannschaften absoluter Gewinner werden, es gibt also höchstens eine Mannschaft, die absoluter Gewinner werden kann, und zwar genau die beliebig gewählte.
-
-Fall 2: die beliebig gewählt Mannschaft gewinnt nicht alle Spiele (der beliebig gewählte Mannschaft hat sowohl ein- als auch ausgehende Kanten). Nun kann man alle Mannschaften, die verloren haben, aus der Liste der potentiellen absoluten Gewinner löschen. Nachdem alle Spiele einer Mannschaft ausgetragen wurden, gibt es mindestens einen Verlierer, für den Fall, dass die beliebig gewählte Mannschaft alle Spiele verloren hat. Die Liste potentieller Gewinner kann also nach einem Iterationsschritt maximal n-1 Mannschaften enthalten.
-
-Wiederholt man diesen Schritt für eine weitere Mannschaft, muss es also wieder mindestens einen Verlierer geben, demzufolge wird wieder mindestens eine Mannschaft aus der Liste potentieller Gewinner gelöscht. Pro Mannschaft, deren Spiele man betrachtet, muss also mindestens eine Mannschaft aus der Liste gelöscht werden. Da nach der Betrachtung der Spiele von n-1 Mannschaften nur eine Mannschaft übrig bleibt, und diese nicht gegen sich selbst spielen kann (also schon alle Spiele absolviert hat), kann es nur ein Team geben, dass nach Betrachtung aller Spiele noch absoluter Gewinner sein kann. 
+Diese Betrachtung kann man nun für alle weiteren Mannschaften machen, wobei bereits betrachtete Spiele außer Acht gelassen werden. Dies kann man insgesamt $n-1$ mal machen, da die letzte Mannschaft bereits gegen alle anderen Mannschaften gespielt hat. Das heißt, dass bei $n-1$ Betrachtungen jedes mal mindestens eine Mannschaft nicht der absolute Sieger sein kann, ergo gibt es am Ende mindestens $n-1$ Mannschaften, die nicht absoluter Sieger sein können (bzw. $n-1$ Knoten, die ausgehende Kanten haben). Nach der oben erläuterten Äquivalenz kann es demzufolge noch höchstens eine Mannschaft geben, die absoluter Sieger sein kann, womit die Aussage bewiesen ist.
 
 $\hfill \square$
 

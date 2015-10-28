@@ -284,7 +284,56 @@ $\hfill \square$
 
 \subsection*{Teilaufgabe b)}
 
+Die Idee des Algorithmus ist beim Knoten $u$ zu beginnen und alle Nachbarknoten zu überprüfen, für welche die Distanz gespeichert wird. Dies passiert für alle Knoten, sodass irgendwann der Zielknoten $v$ gefunden wird und seine Distanz bekannt ist.
+
+Am Anfang wird ein Tabelle angelegt, die für jeden Knoten seine Distanz zu $u$ speichert, welche initial nil ist. Für $u$ ist die Distanz 0. Anschließend wird $u$ zur Liste nächster Knoten hinzugefügt. 
+
+Nun wird über die Liste nächster Knoten iteriert. Für jeden Knoten wird zuerst geprüft, ob er der Zielknoten $v$ ist. Falls ja, wird die für ihn in der Tabelle gespeicherte Distanz zurückgegeben. Ansonsten werden alle Nachbarn des aktuellen Knoten, sofern ihre Distanz nicht der Distanz des aktuellen Knoten entspricht (somit wird das mehrmalige Hinzufügen eines Knoten verhindert), der Liste Nächster Knoten hinzugefügt und seine Distanz wird auf die Distanz des aktuellen Knotens + 1 gesetzt.
+
+\paragraph{Eingabe:} Graph $G$, Startknoten $u$, Zielknoten $v$
+
+\paragraph{Ausgabe:} Distanz zwischen $u$ und $v$ ($d_G(u,v)$)
+
+\begin{algorithm}
+	distanzZurQuelle[u] = 0\;
+	listeNächsterKnoten.hinzufügen(u)\;
+	\For{knoten in listeNächsterKnoten} {
+		\If{knoten == v} {\
+			return distanzZurQuelle[knoten]\;
+		}	
+		\For{nachbar in knoten.nachbarn()} {
+			\If{distanzZurQuelle[nachbar] != distanzZurQuelle[knoten]} {\
+				listeNächsterKnoten.hinzufügen(nachbar)\;
+				distanzZurQuelle[nachbar] = distanzZurQuelle[knoten] + 1\;
+			}
+		}
+	}
+\end{algorithm}
 
 \subsection*{Teilaufgabe c)}
+
+\paragraph{Kantenliste}
+
+Die äußere For-Schleife iteriert im worst case über alle Knoten des Graphen, wird also höchstens $n$ mal ausgeführt.
+
+Die innere For-Schleife listet alle Nachbarn eines Knoten auf. Bei einer Kantenliste geschieht dies in $\bO{m}$.
+
+Damit beträgt die Gesamtlaufzeit $\bO{n*m}$.
+
+\paragraph{Adjazenzmatrix}
+
+Die äußere For-Schleife iteriert im worst case über alle Knoten des Graphen, wird also höchstens $n$ mal ausgeführt.
+
+Die innere For-Schleife listet alle Nachbarn eines Knoten auf. Bei einer Adjazenzmatrix geschieht dies in $\bO{n}$.
+
+Damit beträgt die Gesamtlaufzeit $\bO{n^2}$.
+
+\paragraph{Adjazenzliste}
+
+Die äußere For-Schleife iteriert im worst case über alle Knoten des Graphen, wird also höchstens $n$ mal ausgeführt.
+
+Die innere For-Schleife listet alle Nachbarn eines Knoten auf. Bei einer Adjazenzliste geschieht dies für einen Knoten in $\bO{d}$, im schlimmsten Fall also in $\bO{\Delta}$
+
+Damit beträgt die Gesamtlaufzeit $\bO{n*\Delta}$.
 
 \end{document}

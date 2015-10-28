@@ -121,6 +121,53 @@
 
 \subsection*{Teilaufgabe a)}
 
+\begin{align*}
+	d_G(u,v) = min\{k | \text{es gibt einen u-v-Weg der länge k in G}\}
+\end{align*}
+
+Zu zeigen: $d_G$ ist eine Metrik auf $G$.
+
+Sei $X$ eine beliebige Menge. Eine Abbildung $d: X \times X \rightarrow \R$ heißt Metrik auf $X$, wenn für alle $x,y,z \in X$ folgende Bedingungen gelten:
+
+1) Positive Definitheit: $d(x,y) \ge 0$ und $d(x,y) = 0 \Leftrightarrow x = y $ \\
+2) Symmetrie: $d(x,y) = d(y,x)$ \\
+3) Dreiecksgleichung: $d(x,y) \le d(x,z) + d(z,y)$
+
+Um zu zeigen, dass $d_G$ eine Metrik auf $G$ ist, müssen wir diese drei Eigensschaften für $d_G$ zeigen.
+
+Aus der Aufgabenstellung geht hervor, dass ein Weg, der nur aus einem Knoten $v$ besteht, die Länge $0$ hat. Es folgt:
+
+\begin{align*}
+	\forall u,v \in V(G)\text{ mit } u=v: d_G(u,v) = 0
+\end{align*}
+
+Aus der Aufgabenstellung geht weiterhin hervor, dass, wenn es genau eine Kante zwischen $u$ und $v$ gibt, $d_G(u,v) = 1$ gilt.  Aus diesen beiden Aussagen folgt:
+
+\begin{align*}
+	\forall u,v: d_G(u,v) \ge 0
+\end{align*}
+
+Damit ist Bedingung 1 erfüllt.
+
+Da es sich bei $G$ um einen ungerichteten Graphen handelt und somit für alle Kanten $\{u,v\} \in E(G): \{u,v\} = \{v,u\}$ gilt, folgt daraus auch:
+
+\begin{align*}
+	\forall u,v \in V(G): d_G(u,v) = d_G(v,u)
+\end{align*}
+
+Damit ist Bedingung 2 erfüllt.
+
+Die Dreiecksgleichung sagt aus, dass wenn es einen kürzesten Weg zwischen $u$ und $v$ gibt, dass wenn man einen Weg zwischen $u$ und $v$ über einen beliebigen Knoten $w$ konstruiert, dieser nicht kürzer als $d_G(u,v)$ sein kann. Es gilt also:
+
+\begin{align*}
+	\forall u,v,w \in V(G): d_G(u,v) \le d_G(u,w) + d_G(w,v)
+\end{align*}
+
+Nehmen wir an, dass $d_G(u,w) + d_G(w,v)$ einen Weg ergibt, der tatsächlich kürzer als $d_G(u,v)$, sodass $d_G(u,v) \ge d_G(u,w) + d_G(w,v)$ gilt. Dies erzeugt einen Widerspruch, da $d_G(u,v)$ als der kürzeste Weg zwischen $u$ und $v$ definiert ist. Somit ist auch Bedingung 3 erfüllt.
+
+$d_G$ erfüllt alle Bedingungen und ist somit eine Metrik auf $G$.
+
+$\hfill \square$
 
 \subsection*{Teilaufgabe b)}
 

@@ -105,6 +105,19 @@
 \section*{Aufgabe 3}
 \subsection*{Teilaufgabe a)}
 
+Zu zeigen ist, dass es höchstens einen Knoten gibt, der keine ausgehenenden Kanten hat, sprich höchstens eine Mannschaft, die gegen alle anderen gewinnt.
+
+Dies lässt sich zeigen, indem man die Spiele systematisch austragen lässt, sprich den Graphen den systematisch konstruiert.
+
+Zu Beginn wird eine Liste mit potentiellen absoluten Gewinnern angelegt. Da noch keine Partie ausgetragen wurde, enthält diese Liste zu Beginn alle Mannschaften. Nun wählt man eine beliebige Mannschaft und lässt diese gegen alle anderen Mannschaften antreten. Danach ergeben sich zwei Möglichkeiten:
+
+Fall 1: die beliebig gewählte Mannschaft gewinnt gegen alle anderen Mannschaften (der beliebig gewählte Knoten hat lediglich eingehende Kanten). Dadurch kann keine der anderen Mannschaften absoluter Gewinner werden, es gibt also höchstens eine Mannschaft, die absoluter Gewinner werden kann, und zwar genau die beliebig gewählte.
+
+Fall 2: die beliebig gewählt Mannschaft gewinnt nicht alle Spiele (der beliebig gewählte Mannschaft hat sowohl ein- als auch ausgehende Kanten). Nun kann man alle Mannschaften, die verloren haben, aus der Liste der potentiellen absoluten Gewinner löschen. Nachdem alle Spiele einer Mannschaft ausgetragen wurden, gibt es mindestens einen Verlierer, für den Fall, dass die beliebig gewählte Mannschaft alle Spiele verloren hat. Die Liste potentieller Gewinner kann also nach einem Iterationsschritt maximal n-1 Mannschaften enthalten.
+
+Wiederholt man diesen Schritt für eine weitere Mannschaft, muss es also wieder mindestens einen Verlierer geben, demzufolge wird wieder mindestens eine Mannschaft aus der Liste potentieller Gewinner gelöscht. Pro Mannschaft, deren Spiele man betrachtet, muss also mindestens eine Mannschaft aus der Liste gelöscht werden. Da nach der Betrachtung der Spiele von n-1 Mannschaften nur eine Mannschaft übrig bleibt, und diese nicht gegen sich selbst spielen kann (also schon alle Spiele absolviert hat), kann es nur ein Team geben, dass nach Betrachtung aller Spiele noch absoluter Gewinner sein kann. 
+
+$\hfill \square$
 
 \subsection*{Teilaufgabe b)}
 

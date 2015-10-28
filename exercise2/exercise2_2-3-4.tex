@@ -11,7 +11,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[boxruled]{algorithm2e}
+\usepackage[boxed]{algorithm2e}
 \usepackage{parskip}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
 \usepackage[utf8]{inputenc}  % für Unix-Systeme
@@ -108,12 +108,64 @@
 
 \subsection*{Teilaufgabe b)}
 
+Annahme: beim Erstellen der Knoten- und Kantenliste wird in einem Dictionary für jeden Knoten die Anzahl ausgehender Kanten gespeichert. 
+
+Der Algorithmus sucht anschließend in diesem Dictionary nach einem Knoten mit 0 ausgehenden Kanten.
+
+\paragraph{Eingabe:} Graph G als Knoten- und Kantenliste + Dictionary mit Anzahl ausgehender Kanten pro Knoten
+
+\paragraph{Ausgabe:} Knoten g, welcher der absolute Gewinner ist
+
+\begin{algorithm}
+	\For{knoten in anzahlAusgehenderKanten.schlüssel} {
+		\If{anzahlAusgehenderKanten.wert(schlüssel) == 0}{
+			return schlüssel\;
+		}
+	}
+	return null\;
+\end{algorithm}
+
+Der Algorithmus iteriert einmal über das Dictionary, hat also eine Laufzeit von $\bO{n}$.
 
 \subsection*{Teilaufgabe c)}
 
+Der Algorithmus iteriert über das Knotenarray der Adjazenzliste und sucht nach einem Knoten, dessen Kantenliste leer ist (also einem Knoten, der keine ausgehenden Kanten hat). Dieser Knoten muss der absolute Gewinner sein.
+
+\paragraph{Eingabe:} Graph G als Adjazenzliste
+
+\paragraph{Ausgabe:} Knoten g, welcher der absolute Gewinner ist
+
+\begin{algorithm}
+	\For{knoten in knotenArray} {
+		\If{knoten.kantenListe.größe == 0}{\
+			return knoten
+		}		
+	}
+	return null\;
+\end{algorithm}
+
+Der Algorithmus iteriert einmal über die Kantenliste, hat also eine Laufzeit von $\bO{m}$.
 
 \subsection*{Teilaufgabe d)}
 
+Annahme: beim Erstellen der djazenzmatrix wird in einem Dictionary für jeden Knoten die Anzahl ausgehender Kanten gespeichert. 
+
+Der Algorithmus sucht anschließend in diesem Dictionary nach einem Knoten mit 0 ausgehenden Kanten.
+
+\paragraph{Eingabe:} Graph G als Adjazenzmatrix + Dictionary mit Anzahl ausgehender Kanten pro Knoten
+
+\paragraph{Ausgabe:} Knoten g, welcher der absolute Gewinner ist
+
+\begin{algorithm}
+	\For{knoten in anzahlAusgehenderKanten.schlüssel} {
+		\If{anzahlAusgehenderKanten.wert(schlüssel) == 0}{
+			return schlüssel\;
+		}
+	}
+	return null\;
+\end{algorithm}
+
+Der Algorithmus iteriert einmal über das Dictionary, hat also eine Laufzeit von $\bO{n}$.
 
 \newpage
 

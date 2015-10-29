@@ -1,0 +1,173 @@
+\documentclass[12pt]{scrartcl}%{article} % Beginn der LaTeX-Datei
+
+%% twocolumn
+
+\usepackage{amsmath,amssymb}  % erleichtert Mathe 
+\usepackage{enumerate}% schicke Nummerierung
+
+\usepackage{graphicx} % für Grafik-Einbindung
+%\usepackage{hyperref}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[boxed]{algorithm2e}
+\usepackage{parskip}
+ % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
+\usepackage[utf8]{inputenc}  % für Unix-Systeme
+  % ermöglicht die direkte Eingabe von Umlauten und ß
+  % evt. obige Zeile ersetzen durch
+  % \usepackage[ansinew]{inputenc}  % für Windows
+  % \usepackage[applemac]{inputenc} % für den Mac
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ntheorem
+%
+\usepackage[thmmarks,amsmath,hyperref,noconfig]{ntheorem} 
+  % erlaubt es, Sätze, Definitionen etc. einfach durchzunummerieren.
+\newtheorem{satz}{Satz}[section] % Nummerierung nach Abschnitten
+\newtheorem{hilfssatz}[satz]{Hilfssatz}
+\newtheorem{kor}[satz]{Korollar}
+
+\theorembodyfont{\upshape}
+\newtheorem{beispiel}[satz]{Beispiel}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{definition}[satz]{Definition} %[section]
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\normalfont}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{_\blacksquare}}
+\newtheorem{beweis}{Beweis}
+\qedsymbol{\ensuremath{_\blacksquare}}
+%\theoremclass{LaTeX}
+%
+% Ende ntheorem
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\pagestyle{empty}
+%
+% Ändern der bedruckten Fläche der Seite
+% \addtolength{\textwidth}{3cm}  % Befehl mit zwei Argumenten
+% \addtolength{\textheight}{3cm}
+% \hoffset-2cm % verschiebt das Textfenster nach links
+% \voffset-5mm % verschiebt das Textfenster nach oben
+%
+\parindent=0pt %% keine Einzug zu Beginn von Abs\"atzen
+%\parskip=2mm   %% erzeugt einen zusätzliche Zeilenabstand zwischen
+                %% Absätzen. Nötig bei \parindent=0pt
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ermöglicht, farbigen Text zu drucken.
+\usepackage{color}
+% Und nun werden die Farben definiert - daran können Sie nach Belieben selber rumspielen.
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{darkred}{rgb}{0.3,0,0}
+\definecolor{darkgreen}{rgb}{0,0.3,0}
+\definecolor{darkblue}{rgb}{0,0,0.3}
+\definecolor{pink}{rgb}{0.78,0.09,0.51}
+\definecolor{purple}{rgb}{0.28,0.24,0.55}
+\definecolor{orange}{rgb}{1,0.6,0.0}
+\definecolor{grey}{rgb}{0.4,0.4,0.4}
+\definecolor{aquamarine}{rgb}{0.4,0.8,0.65}
+
+
+\DeclareMathOperator{\GL}{GL} % einige Macro, siehe am Ende Abschn. 2
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cP}{{\mathcal P}}
+\newcommand{\bO}[1]{\mathcal O(#1)}
+\newcommand{\bT}[1]{\Theta (#1)}
+
+\begin{document}
+
+\author{Dennis Hempfing, Sebastian Koall}
+\title{Übung 2}
+\date{} 
+\pagestyle{myheadings}
+\markright{\hfill Dennis Hempfing, Sebastian Koall}
+
+\maketitle % erzeugt den Kopf
+ 
+\section*{Aufgabe 3}
+\subsection*{Teilaufgabe a)}
+
+Zu zeigen ist, dass es höchstens einen Knoten gibt, der keine ausgehenenden Kanten hat, sprich höchstens eine Mannschaft, die gegen alle anderen gewinnt. Äquivalent dazu ist die Aussage, dass es mindestens $n-1$ Knoten gibt, die ausgehende Kanten haben (also mindestens $n-1$ Mannschaften, die mindestens ein Spiel verlieren).
+
+Wir betrachten nun für eine beliebige Mannschaft alle Spiele die sie spielt. Dabei wird sich eine beliebige Verteilung von Siegern und Verlierern ergeben. Es gibt jedoch mindestens einen Verlierer, und zwar für dann Fall dass die beliebig gewählte Mannschaft alle Spiele verliert. Das heißt, dass nach der Betrachtung aller Spiele mindestens eine Mannschaft nicht der absolute Sieger sein kann (sprich mindestens ein Knoten ausgehende Kanten hat).
+
+Diese Betrachtung kann man nun für alle weiteren Mannschaften machen, wobei bereits betrachtete Spiele außer Acht gelassen werden. Dies kann man insgesamt $n-1$ mal machen, da die letzte Mannschaft bereits gegen alle anderen Mannschaften gespielt hat. Das heißt, dass bei $n-1$ Betrachtungen jedes mal mindestens eine Mannschaft nicht der absolute Sieger sein kann, ergo gibt es am Ende mindestens $n-1$ Mannschaften, die nicht absoluter Sieger sein können (bzw. $n-1$ Knoten, die ausgehende Kanten haben). Nach der oben erläuterten Äquivalenz kann es demzufolge noch höchstens eine Mannschaft geben, die absoluter Sieger sein kann, womit die Aussage bewiesen ist.
+
+$\hfill \square$
+
+\subsection*{Teilaufgabe b)}
+
+Annahme: beim Erstellen der Knoten- und Kantenliste wird in einem Dictionary für jeden Knoten die Anzahl ausgehender Kanten gespeichert. 
+
+Der Algorithmus sucht anschließend in diesem Dictionary nach einem Knoten mit 0 ausgehenden Kanten.
+
+\paragraph{Eingabe:} Graph G als Knoten- und Kantenliste + Dictionary mit Anzahl ausgehender Kanten pro Knoten
+
+\paragraph{Ausgabe:} Knoten g, welcher der absolute Gewinner ist
+
+\begin{algorithm}
+	\For{knoten in anzahlAusgehenderKanten.schlüssel} {
+		\If{anzahlAusgehenderKanten.wert(schlüssel) == 0}{
+			return schlüssel\;
+		}
+	}
+	return null\;
+\end{algorithm}
+
+Der Algorithmus iteriert einmal über das Dictionary, hat also eine Laufzeit von $\bO{n}$.
+
+\subsection*{Teilaufgabe c)}
+
+Der Algorithmus iteriert über das Knotenarray der Adjazenzliste und sucht nach einem Knoten, dessen Kantenliste leer ist (also einem Knoten, der keine ausgehenden Kanten hat). Dieser Knoten muss der absolute Gewinner sein.
+
+\paragraph{Eingabe:} Graph G als Adjazenzliste
+
+\paragraph{Ausgabe:} Knoten g, welcher der absolute Gewinner ist
+
+\begin{algorithm}
+	\For{knoten in knotenArray} {
+		\If{knoten.kantenListe.größe == 0}{\
+			return knoten
+		}		
+	}
+	return null\;
+\end{algorithm}
+
+Der Algorithmus iteriert einmal über die Kantenliste, hat also eine Laufzeit von $\bO{m}$.
+
+\subsection*{Teilaufgabe d)}
+
+Annahme: beim Erstellen der djazenzmatrix wird in einem Dictionary für jeden Knoten die Anzahl ausgehender Kanten gespeichert. 
+
+Der Algorithmus sucht anschließend in diesem Dictionary nach einem Knoten mit 0 ausgehenden Kanten.
+
+\paragraph{Eingabe:} Graph G als Adjazenzmatrix + Dictionary mit Anzahl ausgehender Kanten pro Knoten
+
+\paragraph{Ausgabe:} Knoten g, welcher der absolute Gewinner ist
+
+\begin{algorithm}
+	\For{knoten in anzahlAusgehenderKanten.schlüssel} {
+		\If{anzahlAusgehenderKanten.wert(schlüssel) == 0}{
+			return schlüssel\;
+		}
+	}
+	return null\;
+\end{algorithm}
+
+Der Algorithmus iteriert einmal über das Dictionary, hat also eine Laufzeit von $\bO{n}$.
+
+\end{document}

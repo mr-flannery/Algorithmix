@@ -1,0 +1,157 @@
+\documentclass[12pt]{scrartcl}%{article} % Beginn der LaTeX-Datei
+
+%% twocolumn
+
+\usepackage{amsmath,amssymb}  % erleichtert Mathe 
+\usepackage{enumerate}% schicke Nummerierung
+
+\usepackage{graphicx} % für Grafik-Einbindung
+%\usepackage{hyperref}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[boxed]{algorithm2e}
+\usepackage{parskip}
+ % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
+\usepackage[utf8]{inputenc}  % für Unix-Systeme
+  % ermöglicht die direkte Eingabe von Umlauten und ß
+  % evt. obige Zeile ersetzen durch
+  % \usepackage[ansinew]{inputenc}  % für Windows
+  % \usepackage[applemac]{inputenc} % für den Mac
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ntheorem
+%
+\usepackage[thmmarks,amsmath,hyperref,noconfig]{ntheorem} 
+  % erlaubt es, Sätze, Definitionen etc. einfach durchzunummerieren.
+\newtheorem{satz}{Satz}[section] % Nummerierung nach Abschnitten
+\newtheorem{hilfssatz}[satz]{Hilfssatz}
+\newtheorem{kor}[satz]{Korollar}
+
+\theorembodyfont{\upshape}
+\newtheorem{beispiel}[satz]{Beispiel}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{definition}[satz]{Definition} %[section]
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\normalfont}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{_\blacksquare}}
+\newtheorem{beweis}{Beweis}
+\qedsymbol{\ensuremath{_\blacksquare}}
+%\theoremclass{LaTeX}
+%
+% Ende ntheorem
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\pagestyle{empty}
+%
+% Ändern der bedruckten Fläche der Seite
+% \addtolength{\textwidth}{3cm}  % Befehl mit zwei Argumenten
+% \addtolength{\textheight}{3cm}
+% \hoffset-2cm % verschiebt das Textfenster nach links
+% \voffset-5mm % verschiebt das Textfenster nach oben
+%
+\parindent=0pt %% keine Einzug zu Beginn von Abs\"atzen
+%\parskip=2mm   %% erzeugt einen zusätzliche Zeilenabstand zwischen
+                %% Absätzen. Nötig bei \parindent=0pt
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ermöglicht, farbigen Text zu drucken.
+\usepackage{color}
+% Und nun werden die Farben definiert - daran können Sie nach Belieben selber rumspielen.
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{darkred}{rgb}{0.3,0,0}
+\definecolor{darkgreen}{rgb}{0,0.3,0}
+\definecolor{darkblue}{rgb}{0,0,0.3}
+\definecolor{pink}{rgb}{0.78,0.09,0.51}
+\definecolor{purple}{rgb}{0.28,0.24,0.55}
+\definecolor{orange}{rgb}{1,0.6,0.0}
+\definecolor{grey}{rgb}{0.4,0.4,0.4}
+\definecolor{aquamarine}{rgb}{0.4,0.8,0.65}
+
+
+\DeclareMathOperator{\GL}{GL} % einige Macro, siehe am Ende Abschn. 2
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cP}{{\mathcal P}}
+\newcommand{\bO}[1]{\mathcal O(#1)}
+\newcommand{\bT}[1]{\Theta (#1)}
+
+\begin{document}
+
+\author{Dennis Hempfing, Sebastian Koall}
+\title{Übung 2}
+\date{} 
+\pagestyle{myheadings}
+\markright{\hfill Dennis Hempfing, Sebastian Koall}
+
+\maketitle % erzeugt den Kopf
+ 
+\section*{Aufgabe 2}
+
+Zu zeigen ist
+
+\begin{align}
+	\forall n \ge 6: \frac{n^n}{3^n} \le n! \le \frac{n^n}{2^n}
+\end{align}
+
+Induktionsanfang für $n = 6$:
+
+\begin{align*}
+	\frac{6^6}{3^6} \le 6! \le \frac{6^6}{2^6} = 64 \le 720 \le 729
+\end{align*}
+
+Behauptung: wenn (1) für $n$ gilt, so gilt es auch für $n+1$
+
+\begin{align}
+	(\frac{n+1}{3})^{n+1} \le (n+1)! \le (\frac{n+1}{2})^{n+1}
+\end{align}
+
+Teile (2) durch (1):
+
+\begin{align}
+	\frac{(\frac{n+1}{3})^{n+1}}{(\frac{n}{3})^{n}} \le \frac{(n+1)!}{(n)!} \le \frac{(\frac{n+1}{2})^{n+1}}{(\frac{n}{2})^{n}}
+\end{align}
+
+Als nächstes Verringern wir die Basis des Zählers auf $n$, um in Nenner und Zähler den gleichen Exponenten zu haben und können anschließend kürzen.
+
+\begin{align*}
+	\frac{(\frac{n+1}{3})^{n}*\frac{n+1}{3}}{(\frac{n}{3})^{n}} \le \frac{(n+1)!}{(n)!} \le \frac{(\frac{n+1}{2})^{n}*\frac{n+1}{2}}{(\frac{n}{2})^{n}}
+\end{align*}
+
+\begin{align*}
+	(\frac{n+1}{n})^{n} * (\frac{n+1}{3}) \le n+1 \le (\frac{n+1}{n})^{n} * (\frac{n+1}{2})
+\end{align*}
+
+Da $n+1$ in allen Teilen der Ungleichung ein Faktor ist, kann es gekürzt werden.
+
+\begin{align*}
+	(\frac{n+1}{n})^{n} * (\frac{1}{3}) \le 1 \le (\frac{n+1}{n})^{n} * (\frac{1}{2})
+\end{align*}
+
+\begin{align*}
+	(1 + \frac{1}{n})^{n} * (\frac{1}{3}) \le 1 \le (1 + \frac{1}{n})^{n} * (\frac{1}{2})
+\end{align*}
+
+Der Term $(1 + \frac{1}{n})^{n}$ läuft für $n \rightarrow \infty$ gegen $e$. Also können wir $(1 + \frac{1}{n})^{n}$ durch $e$ ersetzen.
+
+\begin{align*}
+	\frac{e}{3} \le 1 \le \frac{e}{2}
+\end{align*}
+
+Somit ist die Aussage (1) bewiesen.
+
+$\hfill \square$
+
+\end{document}

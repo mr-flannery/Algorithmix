@@ -1,0 +1,207 @@
+\documentclass[12pt]{scrartcl}%{article} % Beginn der LaTeX-Datei
+
+%% twocolumn
+
+\usepackage{amsmath,amssymb}  % erleichtert Mathe 
+\usepackage{enumerate}% schicke Nummerierung
+
+\usepackage{graphicx} % für Grafik-Einbindung
+%\usepackage{hyperref}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[boxed]{algorithm2e}
+\usepackage{parskip}
+ % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
+\usepackage[utf8]{inputenc}  % für Unix-Systeme
+  % ermöglicht die direkte Eingabe von Umlauten und ß
+  % evt. obige Zeile ersetzen durch
+  % \usepackage[ansinew]{inputenc}  % für Windows
+  % \usepackage[applemac]{inputenc} % für den Mac
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ntheorem
+%
+\usepackage[thmmarks,amsmath,hyperref,noconfig]{ntheorem} 
+  % erlaubt es, Sätze, Definitionen etc. einfach durchzunummerieren.
+\newtheorem{satz}{Satz}[section] % Nummerierung nach Abschnitten
+\newtheorem{hilfssatz}[satz]{Hilfssatz}
+\newtheorem{kor}[satz]{Korollar}
+
+\theorembodyfont{\upshape}
+\newtheorem{beispiel}[satz]{Beispiel}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{definition}[satz]{Definition} %[section]
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\normalfont}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{_\blacksquare}}
+\newtheorem{beweis}{Beweis}
+\qedsymbol{\ensuremath{_\blacksquare}}
+%\theoremclass{LaTeX}
+%
+% Ende ntheorem
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\pagestyle{empty}
+%
+% Ändern der bedruckten Fläche der Seite
+% \addtolength{\textwidth}{3cm}  % Befehl mit zwei Argumenten
+% \addtolength{\textheight}{3cm}
+% \hoffset-2cm % verschiebt das Textfenster nach links
+% \voffset-5mm % verschiebt das Textfenster nach oben
+%
+\parindent=0pt %% keine Einzug zu Beginn von Abs\"atzen
+%\parskip=2mm   %% erzeugt einen zusätzliche Zeilenabstand zwischen
+                %% Absätzen. Nötig bei \parindent=0pt
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ermöglicht, farbigen Text zu drucken.
+\usepackage{color}
+% Und nun werden die Farben definiert - daran können Sie nach Belieben selber rumspielen.
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{darkred}{rgb}{0.3,0,0}
+\definecolor{darkgreen}{rgb}{0,0.3,0}
+\definecolor{darkblue}{rgb}{0,0,0.3}
+\definecolor{pink}{rgb}{0.78,0.09,0.51}
+\definecolor{purple}{rgb}{0.28,0.24,0.55}
+\definecolor{orange}{rgb}{1,0.6,0.0}
+\definecolor{grey}{rgb}{0.4,0.4,0.4}
+\definecolor{aquamarine}{rgb}{0.4,0.8,0.65}
+
+
+\DeclareMathOperator{\GL}{GL} % einige Macro, siehe am Ende Abschn. 2
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cP}{{\mathcal P}}
+\newcommand{\bO}[1]{\mathcal O(#1)}
+\newcommand{\bT}[1]{\Theta (#1)}
+
+\begin{document}
+
+\author{Dennis Hempfing, Sebastian Koall}
+\title{Übung 2}
+\date{} 
+\pagestyle{myheadings}
+\markright{\hfill Dennis Hempfing, Sebastian Koall}
+
+\maketitle % erzeugt den Kopf
+ 
+\section*{Aufgabe 4}
+
+\subsection*{Teilaufgabe a)}
+
+\begin{align*}
+	d_G(u,v) = min\{k | \text{es gibt einen u-v-Weg der länge k in G}\}
+\end{align*}
+
+Zu zeigen: $d_G$ ist eine Metrik auf $G$.
+
+Sei $X$ eine beliebige Menge. Eine Abbildung $d: X \times X \rightarrow \R$ heißt Metrik auf $X$, wenn für alle $x,y,z \in X$ folgende Bedingungen gelten:
+
+1) Positive Definitheit: $d(x,y) \ge 0$ und $d(x,y) = 0 \Leftrightarrow x = y $ \\
+2) Symmetrie: $d(x,y) = d(y,x)$ \\
+3) Dreiecksgleichung: $d(x,y) \le d(x,z) + d(z,y)$
+
+Um zu zeigen, dass $d_G$ eine Metrik auf $G$ ist, müssen wir diese drei Eigensschaften für $d_G$ zeigen.
+
+Aus der Aufgabenstellung geht hervor, dass ein Weg, der nur aus einem Knoten $v$ besteht, die Länge $0$ hat. Es folgt:
+
+\begin{align*}
+	\forall u,v \in V(G)\text{ mit } u=v: d_G(u,v) = 0
+\end{align*}
+
+Aus der Aufgabenstellung geht weiterhin hervor, dass, wenn es genau eine Kante zwischen $u$ und $v$ gibt, $d_G(u,v) = 1$ gilt.  Aus diesen beiden Aussagen folgt:
+
+\begin{align*}
+	\forall u,v: d_G(u,v) \ge 0
+\end{align*}
+
+Damit ist Bedingung 1 erfüllt.
+
+Da es sich bei $G$ um einen ungerichteten Graphen handelt und somit für alle Kanten $\{u,v\} \in E(G): \{u,v\} = \{v,u\}$ gilt, folgt daraus auch:
+
+\begin{align*}
+	\forall u,v \in V(G): d_G(u,v) = d_G(v,u)
+\end{align*}
+
+Damit ist Bedingung 2 erfüllt.
+
+Die Dreiecksgleichung sagt aus, dass wenn es einen kürzesten Weg zwischen $u$ und $v$ gibt, dass wenn man einen Weg zwischen $u$ und $v$ über einen beliebigen Knoten $w$ konstruiert, dieser nicht kürzer als $d_G(u,v)$ sein kann. Es gilt also:
+
+\begin{align*}
+	\forall u,v,w \in V(G): d_G(u,v) \le d_G(u,w) + d_G(w,v)
+\end{align*}
+
+Nehmen wir an, dass $d_G(u,w) + d_G(w,v)$ einen Weg ergibt, der tatsächlich kürzer als $d_G(u,v)$, sodass $d_G(u,v) \ge d_G(u,w) + d_G(w,v)$ gilt. Dies erzeugt einen Widerspruch, da $d_G(u,v)$ als der kürzeste Weg zwischen $u$ und $v$ definiert ist. Somit ist auch Bedingung 3 erfüllt.
+
+$d_G$ erfüllt alle Bedingungen und ist somit eine Metrik auf $G$.
+
+$\hfill \square$
+
+\subsection*{Teilaufgabe b)}
+
+Die Idee des Algorithmus ist beim Knoten $u$ zu beginnen und alle Nachbarknoten zu überprüfen, für welche die Distanz gespeichert wird. Dies passiert für alle Knoten, sodass irgendwann der Zielknoten $v$ gefunden wird und seine Distanz bekannt ist.
+
+Am Anfang wird ein Tabelle angelegt, die für jeden Knoten seine Distanz zu $u$ speichert, welche initial nil ist. Für $u$ ist die Distanz 0. Anschließend wird $u$ zur Liste nächster Knoten hinzugefügt. 
+
+Nun wird über die Liste nächster Knoten iteriert. Für jeden Knoten wird zuerst geprüft, ob er der Zielknoten $v$ ist. Falls ja, wird die für ihn in der Tabelle gespeicherte Distanz zurückgegeben. Ansonsten werden alle Nachbarn des aktuellen Knoten, sofern ihre Distanz nicht der Distanz des aktuellen Knoten entspricht (somit wird das mehrmalige Hinzufügen eines Knoten verhindert), der Liste Nächster Knoten hinzugefügt und seine Distanz wird auf die Distanz des aktuellen Knotens + 1 gesetzt.
+
+\paragraph{Eingabe:} Graph $G$, Startknoten $u$, Zielknoten $v$
+
+\paragraph{Ausgabe:} Distanz zwischen $u$ und $v$ ($d_G(u,v)$)
+
+\begin{algorithm}
+	distanzZurQuelle[u] = 0\;
+	listeNächsterKnoten.hinzufügen(u)\;
+	\For{knoten in listeNächsterKnoten} {
+		\If{knoten == v} {\
+			return distanzZurQuelle[knoten]\;
+		}	
+		\For{nachbar in knoten.nachbarn()} {
+			\If{distanzZurQuelle[nachbar] == nil]} {\
+				listeNächsterKnoten.hinzufügen(nachbar)\;
+				distanzZurQuelle[nachbar] = distanzZurQuelle[knoten] + 1\;
+			}
+		}
+	}
+\end{algorithm}
+
+\subsection*{Teilaufgabe c)}
+
+\paragraph{Kantenliste}
+
+Die äußere For-Schleife iteriert im worst case über alle Knoten des Graphen, wird also höchstens $n$ mal ausgeführt.
+
+Die innere For-Schleife listet alle Nachbarn eines Knoten auf. Bei einer Kantenliste geschieht dies in $\bO{m}$.
+
+Damit beträgt die Gesamtlaufzeit $\bO{n*m}$.
+
+\paragraph{Adjazenzmatrix}
+
+Die äußere For-Schleife iteriert im worst case über alle Knoten des Graphen, wird also höchstens $n$ mal ausgeführt.
+
+Die innere For-Schleife listet alle Nachbarn eines Knoten auf. Bei einer Adjazenzmatrix geschieht dies in $\bO{n}$.
+
+Damit beträgt die Gesamtlaufzeit $\bO{n^2}$.
+
+\paragraph{Adjazenzliste}
+
+Die äußere For-Schleife iteriert im worst case über alle Knoten des Graphen, wird also höchstens $n$ mal ausgeführt.
+
+Die innere For-Schleife listet alle Nachbarn eines Knoten auf. Bei einer Adjazenzliste geschieht dies für einen Knoten in $\bO{d}$, im schlimmsten Fall also in $\bO{\Delta}$
+
+Damit beträgt die Gesamtlaufzeit $\bO{n*\Delta}$.
+
+\end{document}

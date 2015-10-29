@@ -302,7 +302,7 @@ Nun wird über die Liste nächster Knoten iteriert. Für jeden Knoten wird zuers
 			return distanzZurQuelle[knoten]\;
 		}	
 		\For{nachbar in knoten.nachbarn()} {
-			\If{distanzZurQuelle[nachbar] != distanzZurQuelle[knoten]} {\
+			\If{distanzZurQuelle[nachbar] == nil]} {\
 				listeNächsterKnoten.hinzufügen(nachbar)\;
 				distanzZurQuelle[nachbar] = distanzZurQuelle[knoten] + 1\;
 			}

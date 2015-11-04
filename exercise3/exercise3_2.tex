@@ -19,7 +19,7 @@
   % evt. obige Zeile ersetzen durch
   % \usepackage[ansinew]{inputenc}  % für Windows
   % \usepackage[applemac]{inputenc} % für den Mac
-
+\usepackage{listings}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -89,6 +89,9 @@
 \newcommand{\bT}[1]{\Theta (#1)}
 \newcommand{\bOg}[1]{\Omega (#1)}
 
+% Code-Macro, wenn man mal etwas als Code highlighten möchte
+\newcommand{\code}[1]{\lstinline[basicstyle=\ttfamily\color{black}]{#1}}
+
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
@@ -99,22 +102,62 @@
 
 \maketitle % erzeugt den Kopf
 
-\section*{Aufgabe 1}
+\section*{Aufgabe 2}
 
 \subsection*{Teilaufgabe a)}
 
-Ich finde die Guthabenmethode am eingängisten. Sie erfordert lediglich zu erkennen, welche Operation teuer sind, welche billig sind, und die billigen zu besteuern. 
+Hier soll anhand der Guthabenmethode gezeigt werden, was das Einfügen von $n$ Elementen in ein dynamisches Array kostet.
+
+Die tatsächlichen Kosten berechnen sich wie folgt:
+
+\begin{align*}
+	t_i = e_i + v_i
+\end{align*}
+
+Dabei sind $e_i$ die Kosten für das Einfügen und $v_i$ die Kosten für das Verdoppeln der Länge des Arrays, wobei das Einfügen konstante Kosten hat (im Folgenden $c$) und die Kosten für das Verdoppeln genau der Länge des daraus entstehenden Arrays entsprechen (also $n * c$).
+
+Zur Berechnung der amortisierten Kosten wählen wir folgende Besteuerungsregel: jedes mal, wenn ein Element in das Array eingefügt wird, werden $4c$ auf das Bankkonto eingezahlt. Damit wollen wir die Kosten für das Verdoppeln des Arrays bezahlen. Die amortisierten Kosten berechnen sich also wie folgt:
+
+\begin{align*}
+a_i = 5*e_i + 0*v_i
+\end{align*}
+
+Die Idee dabei ist folgende: angenommen ein Array ist gerade verdoppelt worden, hat also eine Länge von $n$ und ist zur Hälfte gefüllt. Das heißt, das bis zur nächstens Verdoppelung $\frac{n}{2}$ Elemente hinzugefügt werden können. Wird dies getan, beträgt unser Guthaben genau $\frac{n}{2} * 4 * c$, also $2 * n * c$. Wird das Array nun erneut verdoppelt, entsteh ein neues Array der Länge $2n$, was genau unserem Guthaben entspricht. Die Kosten fürs Verdoppeln sind also durch unser Guthaben gedeckt.
+
+Offensichtlich gelten auch $a_0 = 0$, da bei einer Folge von 0 Operation kein Guthaben eingezahlt wird und $a_i \ge 0$, da, wie gerade gezeigt, vor jedem Verdoppeln das nötige Guthaben bereits vorhanden ist.
+
+Die Laufzeit für das Einfügen von $n$ Elementen in ein dynamisches Array beträgt also $\bO{5 * c * n} = \bO{n}$.
+
+$\hfill \square$
 
 \subsection*{Teilaufgabe b)}
 
-Das Ausführen von Operationen muss abhängig vom Zustand der Datenstruktur unterschiedliche Kosten verursachen. Bei einer Datenstruktur, bei der jede Operation die gleichen Kosten hätte, würde eine traditionelle Worst Case-Analyse zum gleichen Ergebnis führen wie eine amortisierte Analyse, da jede Operation zu jedem Zeitpunkt den Worst Case darstellt.
+Zusätzlich zu Teilaufgabe a) müssen nun auch die Kosten für das Löschen betrachtet werden. Die Löschoperation hat konstante Kosten und die Kosten fürs Halbieren des Arrays entsprechen genau der Länge des neuen Arrays.
+
+Wir erweitern die Besteuerungsregel also so, dass das Löschen eines Elements die Kosten für das halbieren des Arrays mitträgt. Jede Löschoperation soll $2c$ auf das Bankkonto einzahlen. Die amortsierten Kosten berechnen sich also wie folgt:
+
+\begin{align*}
+a_i = 5*e_i + 0*v_i +3*l_i + 0*h_i
+\end{align*}
+
+$l_i$ sind dabei die Kosten der Löschoperation und $h_i$ die Kosten fürs Halbieren des Arrays.
+
+Im schlimmsten Fall werden genau dann soviele Löschoperationen getätigt, dass das Array halbiert wird, wenn es gerade Verdoppelt wurde, da das Guthaben zu diesem Zeitpunkt am geringsten ist. Das Array hat also eine Länge von $n$ und ist mit $\frac{n}{2} + 1$ Elementen befüllt. Damit das Array für $p = \frac{1}{4}$ halbiert wird müssen also genau $\frac{n}{4}+1$ Elemente gelöscht werden. Geschieht dies beträgt unser Guthaben genau $(\frac{n}{4}+1) * 2*c = (\frac{n}{2}+2)*c$. Ein Array der Länge $n$ zu halbieren kostet genau $\frac{n}{2}$, was offensichtlich durch unser Guthaben gedeckt wird.
+
+Analog zu a) gelten wieder $a_0 = 0$, da bei einer Folge von 0 Operation kein Guthaben eingezahlt wird und $a_i \ge 0$, da auch fürs Löschen die Kosten durch das Guthaben gedeckt sind.
+
+Die Laufzeit für eine beliebige Folge von Einfüge- und Löschoperationen auf einem dynamischen Array beträgt also $\bO{5 * c * n + 2*c*n} = \bO{n}$.
+
+$\hfill \square$
 
 \subsection*{Teilaufgabe c)}
 
-Der Unterschied zwischen der Guthaben- und der Potentialmethode ist, dass das Guthabenmethode kosten für die einzelnen Operationen definiert, während die Potentialmethode das Potential der Datenstruktur selbst betrachtet. Beide Methoden sollten zum gleichen Ergebnis führen, jedoch ist die Herangehensweise eine andere.
+Für diese Aufgabe sie die Besteuerungsregel aus b) zugrunde gelegt.
 
-\subsection*{Teilaufgabe d)}
+Für $p = \frac{1}{2}$ sind die Kosten für eine Folge von Einfüge- und Löschoperationen genau dann am höchsten, wenn wir nach jedem Verdoppeln das Arrays genau ein Element löschen, das Array dann wieder halbiert wird. Anschließend fügen wir ein Element hinzu, das Array wird verdoppelt, wir löschen ein Element, das Array wird halbiert, usw.
 
+Da das Verdoppeln eines Arrays immer durch eine Einfügeoperation getriggert wird, beträgt unser Guthaben nach einer Verdopplung immer $4c$. Damit die oben beschriebene Folge von Operationen also Kosten verursacht, die nicht gedeckt werden können, muss das Array nach der Halbierung mindestens eine Länge von 8 haben. Daraus folgt, dass die Folge von Operationen aus mindestens $2^n + 1$ Einfügeoperationen für $n \ge 3$ gefolgt von alternierenden Lösch- und Einfügeoperationen bestehen muss.
 
+Die dadurch entstehenden Kosten können nicht gedeckt werden, die angegebene Folge von Operationen kann also für $p = \frac{1}{2}$ nicht mehr in linearer Laufzeit ausgeführt werden.
 
 \end{document}

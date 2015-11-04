@@ -11,7 +11,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[boxruled]{algorithm2e}
+\usepackage[boxed]{algorithm2e}
 \usepackage{parskip}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
 \usepackage[utf8]{inputenc}  % für Unix-Systeme
@@ -19,7 +19,7 @@
   % evt. obige Zeile ersetzen durch
   % \usepackage[ansinew]{inputenc}  % für Windows
   % \usepackage[applemac]{inputenc} % für den Mac
-
+\usepackage{listings}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -89,6 +89,9 @@
 \newcommand{\bT}[1]{\Theta (#1)}
 \newcommand{\bOg}[1]{\Omega (#1)}
 
+% Code-Macro, wenn man mal etwas als Code highlighten möchte
+\newcommand{\code}[1]{\lstinline[basicstyle=\ttfamily\color{black}]{#1}}
+
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
@@ -99,22 +102,46 @@
 
 \maketitle % erzeugt den Kopf
 
-\section*{Aufgabe 1}
+\section*{Aufgabe 4}
 
-\subsection*{Teilaufgabe a)}
+\paragraph{Idee des Algorithmus}
+Zuerst wird ein Dictionary erstellt um die Färbung der einzelnen Knoten zu speichern (als Farben kommen \code{0} und \code{1} zum Einsatz). 
+Das Dictionary wird mit den Knoten initialisiert, wobei jedem Knoten zunächst die Farbe \code{null} zugewiesen wird. Dem ersten Knoten der Knotenliste weisen wir als Farbe \code{0} zu.
 
-Ich finde die Guthabenmethode am eingängisten. Sie erfordert lediglich zu erkennen, welche Operation teuer sind, welche billig sind, und die billigen zu besteuern. 
+Nun iterieren wir über alle Knoten (wobei der erste Knoten bereits eine Farbe hat) und testen für alle Nachbarn eines Knoten zunächst, ob seine Farbe der des aktuellen Knoten entspricht. Falls ja, kann der Graph nicht bipartit sein, da somit zwei Knoten einer Partition benachbart wären, was der Definition eines bipartiten Graphen widerspricht. Sind die Farben nicht identisch, testen wir ob der Nachbarknoten bereits eine Farbe hat. Falls nicht, weisen wir ihm genau die Farbe der Partition zu, zu dem der aktuelle Knoten nicht gehört.
 
-\subsection*{Teilaufgabe b)}
+Haben wir dies für alle Knoten getan und keine Nachbarschaft gleichfarbiger Knoten festgestellt, ist der Graph bipartit.
 
-Das Ausführen von Operationen muss abhängig vom Zustand der Datenstruktur unterschiedliche Kosten verursachen. Bei einer Datenstruktur, bei der jede Operation die gleichen Kosten hätte, würde eine traditionelle Worst Case-Analyse zum gleichen Ergebnis führen wie eine amortisierte Analyse, da jede Operation zu jedem Zeitpunkt den Worst Case darstellt.
+\begin{algorithm}[ht!]
+	dict nodeColor = new dict\;
+	
+	\For{node in nodes} {
+		nodeColor.put(node, null);	
+	}
+	
+	nodeColor.put(nodes.first, 0)\;
+	
+	\For{node in nodes} {
+		\For{neighbour in node.neighbours} {
+			\If{nodeColor(neighbour) == nodeColor(node)} {\
+				return false\;	
+			} \ElseIf{nodeColor(neighbour) == null} {\
+				nodeColor(neighbour) = (nodeColor(node) + 1) \% 2\;
+			}
+		}		
+	}
+	
+	return true\;
+\end{algorithm}
 
-\subsection*{Teilaufgabe c)}
+\paragraph{Laufzeit}
+Als Datenstruktur für den Graphen kommt eine Adjazenzliste zum Einsatz.
 
-Der Unterschied zwischen der Guthaben- und der Potentialmethode ist, dass das Guthabenmethode kosten für die einzelnen Operationen definiert, während die Potentialmethode das Potential der Datenstruktur selbst betrachtet. Beide Methoden sollten zum gleichen Ergebnis führen, jedoch ist die Herangehensweise eine andere.
+Der Zugriff auf das Dictionary erfolgt in konstanter Zeit und ist somit irrelevant.
+Das Initialisieren des Dictionarys kostet $\bO{n}$, da wir einmal über alle Knoten iterieren.
 
-\subsection*{Teilaufgabe d)}
+Die äußere \code{for}-Schleife iteriert über alle Knoten, was genau \code{n} Stück sind. Die innere \code{for}-Schleife iteriert jeweils über die Nachbarn eines Knoten. Da in einer Adjazenzliste jede Kante doppelt vorkommt, sind dies also genau $2m$ Iterationen.
 
-
+Dies liefert uns eine Gesamtlaufzeit von $\bO{2n + m}$ = $\bO{n + m}$.
 
 \end{document}

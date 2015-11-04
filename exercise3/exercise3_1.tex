@@ -11,7 +11,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[boxed]{algorithm2e}
+\usepackage[boxruled]{algorithm2e}
 \usepackage{parskip}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
 \usepackage[utf8]{inputenc}  % für Unix-Systeme
@@ -98,46 +98,23 @@
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
 
 \maketitle % erzeugt den Kopf
- 
-\section*{Aufgabe 3}
-{\large Es gilt:}
 
-$ a_0 = a_1 = 1 $
+\section*{Aufgabe 1}
 
-$ \forall n \ge 2: a_n = 6 * a_{n-2} - a_{n-1} $$ a_0 = a_1 = 1 $
+\subsection*{Teilaufgabe a)}
 
-{\large Zu zeigen:}
+Ich finde die Guthabenmethode am eingängisten. Sie erfordert lediglich zu erkennen, welche Operation teuer sind, welche billig sind, und die billigen zu besteuern. 
 
-$  \forall n : a_{n} = \frac{2^{n + 2} + (-3)^n}{5} $
+\subsection*{Teilaufgabe b)}
 
-{\large Induktionsbasis:}
+Das Ausführen von Operationen muss abhängig vom Zustand der Datenstruktur unterschiedliche Kosten verursachen. Bei einer Datenstruktur, bei der jede Operation die gleichen Kosten hätte, würde eine traditionelle Worst Case-Analyse zum gleichen Ergebnis führen wie eine amortisierte Analyse, da jede Operation zu jedem Zeitpunkt den Worst Case darstellt.
 
-$ a_0 = \frac{2^{0 + 2} + (-3)^0}{5} = \frac{4 + 1}{5} = 1 $
+\subsection*{Teilaufgabe c)}
 
-$ a_1 = \frac{2^{1 + 2} + (-3)^1}{5} = \frac{8 - 3}{5} = 1 $
+Der Unterschied zwischen der Guthaben- und der Potentialmethode ist, dass das Guthabenmethode kosten für die einzelnen Operationen definiert, während die Potentialmethode das Potential der Datenstruktur selbst betrachtet. Beide Methoden sollten zum gleichen Ergebnis führen, jedoch ist die Herangehensweise eine andere.
 
-{\large Induktionsschritt:}
+\subsection*{Teilaufgabe d)}
 
-\emph{Induktionsvoraussetzung:}
 
-$  \forall n : a_{n} = \frac{2^{n + 2} + (-3)^n}{5} $
-
-\emph{Induktionsschluss:}
-
-$ \forall n : a_{n+2} = 6 * a_{n} - a_{n+1} $ 
-
-$ \Leftrightarrow \frac{2^{(n + 2) + 2} + (-3)^{n+2}}{5} = 6 * \frac{2^{n + 2} + (-3)^n}{5} - \frac{2^{(n + 1) + 2} + (-3)^{n+1}}{5} $
-
-$ \Leftrightarrow \frac{2^{n + 4} + (-3)^{n+2}}{5} = 6 * \frac{2^{n + 2} + (-3)^n}{5} - \frac{2^{n + 3} + (-3)^{n+1}}{5} $
-
-$ \Leftrightarrow \frac{2^4 * 2^n + (-3)^2 * (-3)^n}{5} = 6 * \frac{2^2 * 2^n + (-3)^n}{5} - \frac{2^3 * 2^n + (-3) * (-3)^n}{5} $
-
-$ \Leftrightarrow \frac{16 * 2^n}{5} + \frac{9 * (-3)^n}{5} = 6 * \left( \frac{4 * 2^n}{5} + \frac{(-3)^n}{5} \right) - \left( \frac{8 * 2^n}{5} - \frac{-3 * (-3)^n}{5} \right) $
-
-$ \Leftrightarrow \frac{16}{5} * 2^n + \frac{9}{5} * (-3)^n = \frac{24}{5} * 2^n + \frac{6}{5} * (-3)^n - \frac{8}{5} * 2^n + \frac{3}{5} * (-3)^n $
-
-$ \Leftrightarrow \frac{16}{5} * 2^n + \frac{9}{5} * (-3)^n = \frac{16}{5} * 2^n + \frac{9}{5} * (-3)^n $ \hfill w.A.
-
-$ \hfill \square $
 
 \end{document}

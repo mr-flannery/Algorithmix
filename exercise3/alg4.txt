@@ -1,0 +1,14 @@
+dict = new dict //intial sind alle Werte null
+adjazenzliste
+count = 0
+
+
+for node in nodes:
+	dict[node] = count%2
+	for neighbour in node.neighbours:
+		if dict[neighbour] == dict[node]:
+			return false
+		else if dict[neighbour] == null:
+			dict[neighbour] = (dict[node]+1)%2
+
+return true;

@@ -1,0 +1,142 @@
+\documentclass[12pt]{scrartcl}%{article} % Beginn der LaTeX-Datei
+
+%% twocolumn
+
+\usepackage{amsmath,amssymb}  % erleichtert Mathe 
+\usepackage{enumerate}% schicke Nummerierung
+
+\usepackage{graphicx} % für Grafik-Einbindung
+%\usepackage{hyperref}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[boxed]{algorithm2e}
+\usepackage{parskip}
+ % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
+\usepackage[utf8]{inputenc}  % für Unix-Systeme
+  % ermöglicht die direkte Eingabe von Umlauten und ß
+  % evt. obige Zeile ersetzen durch
+  % \usepackage[ansinew]{inputenc}  % für Windows
+  % \usepackage[applemac]{inputenc} % für den Mac
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ntheorem
+%
+\usepackage[thmmarks,amsmath,hyperref,noconfig]{ntheorem} 
+  % erlaubt es, Sätze, Definitionen etc. einfach durchzunummerieren.
+\newtheorem{satz}{Satz}[section] % Nummerierung nach Abschnitten
+\newtheorem{hilfssatz}[satz]{Hilfssatz}
+\newtheorem{kor}[satz]{Korollar}
+
+\theorembodyfont{\upshape}
+\newtheorem{beispiel}[satz]{Beispiel}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{definition}[satz]{Definition} %[section]
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\normalfont}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{_\blacksquare}}
+\newtheorem{beweis}{Beweis}
+\qedsymbol{\ensuremath{_\blacksquare}}
+%\theoremclass{LaTeX}
+%
+% Ende ntheorem
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\pagestyle{empty}
+%
+% Ändern der bedruckten Fläche der Seite
+% \addtolength{\textwidth}{3cm}  % Befehl mit zwei Argumenten
+% \addtolength{\textheight}{3cm}
+% \hoffset-2cm % verschiebt das Textfenster nach links
+% \voffset-5mm % verschiebt das Textfenster nach oben
+%
+\parindent=0pt %% keine Einzug zu Beginn von Abs\"atzen
+%\parskip=2mm   %% erzeugt einen zusätzliche Zeilenabstand zwischen
+                %% Absätzen. Nötig bei \parindent=0pt
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ermöglicht, farbigen Text zu drucken.
+\usepackage{color}
+% Und nun werden die Farben definiert - daran können Sie nach Belieben selber rumspielen.
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{darkred}{rgb}{0.3,0,0}
+\definecolor{darkgreen}{rgb}{0,0.3,0}
+\definecolor{darkblue}{rgb}{0,0,0.3}
+\definecolor{pink}{rgb}{0.78,0.09,0.51}
+\definecolor{purple}{rgb}{0.28,0.24,0.55}
+\definecolor{orange}{rgb}{1,0.6,0.0}
+\definecolor{grey}{rgb}{0.4,0.4,0.4}
+\definecolor{aquamarine}{rgb}{0.4,0.8,0.65}
+
+
+\DeclareMathOperator{\GL}{GL} % einige Macro, siehe am Ende Abschn. 2
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cP}{{\mathcal P}}
+\newcommand{\bO}[1]{\mathcal O(#1)}
+\newcommand{\bT}[1]{\Theta (#1)}
+
+\begin{document}
+
+\author{Dennis Hempfing, Sebastian Koall}
+\title{Übung 3}
+\date{} 
+\pagestyle{myheadings}
+\markright{\hfill Dennis Hempfing, Sebastian Koall}
+
+\maketitle % erzeugt den Kopf
+ 
+\section*{Aufgabe 3}
+{\large Es gilt:}
+
+$ a_0 = a_1 = 1 $
+
+$ \forall n \ge 2: a_n = 6 * a_{n-2} - a_{n-1} $$ a_0 = a_1 = 1 $
+
+{\large Zu zeigen:}
+
+$  \forall n : a_{n} = \frac{2^{n + 2} + (-3)^n}{5} $
+
+{\large Induktionsbasis:}
+
+$ a_0 = \frac{2^{0 + 2} + (-3)^0}{5} = \frac{4 + 1}{5} = 1 $
+
+$ a_1 = \frac{2^{1 + 2} + (-3)^1}{5} = \frac{8 - 3}{5} = 1 $
+
+{\large Induktionsschritt:}
+
+\emph{Induktionsvoraussetzung:}
+
+$  \forall n : a_{n} = \frac{2^{n + 2} + (-3)^n}{5} $
+
+\emph{Induktionsschluss:}
+
+$ \forall n : a_{n+2} = 6 * a_{n} - a_{n+1} $ 
+
+$ \Leftrightarrow \frac{2^{(n + 2) + 2} + (-3)^{n+2}}{5} = 6 * \frac{2^{n + 2} + (-3)^n}{5} - \frac{2^{(n + 1) + 2} + (-3)^{n+1}}{5} $
+
+$ \Leftrightarrow \frac{2^{n + 4} + (-3)^{n+2}}{5} = 6 * \frac{2^{n + 2} + (-3)^n}{5} - \frac{2^{n + 3} + (-3)^{n+1}}{5} $
+
+$ \Leftrightarrow \frac{2^4 * 2^n + (-3)^2 * (-3)^n}{5} = 6 * \frac{2^2 * 2^n + (-3)^n}{5} - \frac{2^3 * 2^n + (-3) * (-3)^n}{5} $
+
+$ \Leftrightarrow \frac{16 * 2^n}{5} + \frac{9 * (-3)^n}{5} = 6 * \left( \frac{4 * 2^n}{5} + \frac{(-3)^n}{5} \right) - \left( \frac{8 * 2^n}{5} - \frac{-3 * (-3)^n}{5} \right) $
+
+$ \Leftrightarrow \frac{16}{5} * 2^n + \frac{9}{5} * (-3)^n = \frac{24}{5} * 2^n + \frac{6}{5} * (-3)^n - \frac{8}{5} * 2^n + \frac{3}{5} * (-3)^n $
+
+$ \Leftrightarrow \frac{16}{5} * 2^n + \frac{9}{5} * (-3)^n = \frac{16}{5} * 2^n + \frac{9}{5} * (-3)^n $ \hfill w.A.
+
+$ \hfill \square $
+
+\end{document}

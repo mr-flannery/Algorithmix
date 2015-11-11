@@ -95,7 +95,7 @@
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
-\title{Übung 3}
+\title{Übung 4}
 \date{} 
 \pagestyle{myheadings}
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
@@ -104,6 +104,25 @@
 
 \section*{Aufgabe 2}
 
+Wir nutzen jeweils einen Stack um die Operationen \code{enqueue} bzw. \code{dequeue} zu implementieren. Das heißt wir nennen einen Stack den \code{enqueue-Stack} und den anderen den \code{dequeue-Stack}.
 
+\code{enqueue} und \code{dequeue} können grundsätzlich in konstanter Zeit ausgeführt werden. Bei jeder \code{enqueue}-Operationen wird ein Element auf den \code{enqueue-Stack} gelegt und bei jeder \code{dequeue}-Operation wird ein Element vom \code{dequeue-Stack} entfernt. Sollte bei Aufruf der \code{dequeue}-Operation der \code{dequeue-Stack} leer sein, müssen zunächst alle Elemente des \code{enqueue-Stacks} auf den \code{dequeue-Stack} gelegt werden (im Folgenden \code{shift} genannt). Jedes Element muss also vom \code{enqueue-Stack} mittels \code{pop} entfernt und mittels \code{push} auf den \code{dequeue-Stack} gelegt werden. Wir gehen dabei davon aus, dass \code{pop} und \code{push} ebenfalls in konstanter Zeit ausgeführt werden können. Liegen $n$ Elemente auf dem \code{enqueue-Stack}, kostet die \code{shift}-Operation also genau $2*n$.
+
+Wir betrachtetn nun die amortisierte Laufzeit dieser Queue-Implementierung mithilfe der Guthabenmethode. Dazu wählen wir folgende Besteuerungsmethode: Um die Kosten der \code{shift}-Operation zu decken, zahlt \code{enqueue} bei jedem Aufruf $2c$ auf das Guthabenkonto ein. Daraus ergibt sich folgende Kostengleichung: 
+
+\begin{align*}
+	a_i = 3*e_i + d_i + 0*s_i
+\end{align*}
+
+Dabei sind $e_i$ die Kosten der \code{enqueue}-Operation, $d_i$ die Kosten der \code{dequeue}-Operation und $s_i$ die Kosten der \code{shift}-Operation.
+
+Nun bleibt zu zeigen, dass $a_0 = 0$ (1) und $a_i \ge 0$ (2) gelten. (1) gilt offensichtlich, da bei einer Folge von 0 Operationen kein Guthaben eingezahlt wird. (2) gilt ebenfalls, da \code{shift} genau zwei mal soviel Guthaben verbraucht, wie \code{enqueue}-Operationen seit dem letzten \code{shift} ausgeführt worden sind. Da jedes \code{enqueue} genau $2c$ einzahlt, ist das Guthaben nach jedem \code{shift} genau 0.
+
+Für eine belieibige Folge von $n$ Operationen ergibt sich somit eine Gesamtlaufzeit von
+
+\begin{align*}
+	T(n) = 3*n + n + 0*n = \bO{4n} = \bO{n}
+\end{align*}
+$\hfill \square$
 
 \end{document}

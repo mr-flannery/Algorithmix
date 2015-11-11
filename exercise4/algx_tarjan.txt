@@ -1,0 +1,39 @@
+input: gerichteter Graph G (als Adjazenzliste), Knoten z
+ouput: SZK für v element SZK
+
+// init
+Map inStack Knoten -> relevant(0/1)
+Map besucht Knoten -> besucht(0/1)
+-> for schleife
+Stack stack = new Stack;
+
+
+global index = 1;
+
+// exec
+func main:
+for (v in Knoten):
+	if (besucht(v) == 0):
+		strongComp(v);
+
+func strongComp(v):
+
+v.index = index;
+v.label = index;
+++index;
+relevant(v) = 1;
+besucht(v) = 1;
+
+for (v' in v.nachbarn):
+	if (besucht(v') == 0):
+		strongComp(v');
+		v.label = min(v.label, v'.label);
+	else if (relevant(v') == 1):
+		v.label = min(v.label, v'.index);
+
+if (v.index == v.label && v == z):
+	Graph szk = new Graph;
+	while (stack.notEmpty):
+		szk.addNode(stack.pop);
+
+return szk;

@@ -13,6 +13,7 @@
 \usepackage{lmodern}
 \usepackage[boxed]{algorithm2e}
 \usepackage{parskip}
+\usepackage{listings}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
 \usepackage[utf8]{inputenc}  % für Unix-Systeme
   % ermöglicht die direkte Eingabe von Umlauten und ß
@@ -89,16 +90,93 @@
 \newcommand{\bT}[1]{\Theta (#1)}
 \newcommand{\bOg}[1]{\Omega (#1)}
 
+\newcommand{\code}[1]{\lstinline[basicstyle=\ttfamily\color{black}]{#1}}
+
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
-\title{Übung 3}
+\title{Übung 4}
 \date{} 
 \pagestyle{myheadings}
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
 
 \maketitle % erzeugt den Kopf
  
-\section*{Aufgabe 3}
+\section*{Aufgabe 4}
+
+\paragraph{Idee:} Der Algorithmus basiert im wesentlich auf dem Algorithmus von Tarjan, bei welchem es sich um eine modifizierte Tiefensuche handelt. Dabei wird an jeden Knoten bei seiner erstmaligen Betrachtung ein Index und ein Label vergeben. Der Index dient der Nummerierung der Knoten und das Label bestimmt die Zugehörigkeit zu einer starken Zusammenhangskomponente.
+
+Zunächst werden zwei Dictionaries (Mengen von Key-Value-Paaren) \code{inStack} und \code{visited} erstellt und für jeden Knoten mit 0 initialisiert. Dabei steht jeweils 0 für nicht im Stack/nicht besucht und 1 für im Stack/besucht. Zusätzlich gibt es eine Variable \code{index}, die initial den Wert 1 hat sowie einen Stack, der initial leer ist. Der Einfachheit halber wird davon ausgegangen, dass \code{index} und \code{z} global sichtbar sind.
+
+Nun wird über alle Knoten von $G$ iteriert. Wurde der Knoten noch nicht besucht, wird für ihn die Funktion \code{strongComp(v)} aufgerufen.
+
+In dieser Funktion wird für der Index sowie das Label des Knoten auf den aktuellen Wert der Variable \code{index} gesetzt. Anschließend wird \code{index} inkrementiert, \code{v} wird auf den Stack gepusht und \code{inStack(v)} sowie \code{visited(v)} werden auf 1 gesetzt.
+
+Nun wird über alle Nachbarn von \code{v} iteriert. Sollte dieser Nachbar noch nicht besucht worden sein, wird für ihn \code{strongComp(v)} aufgerufen und nach Abschluss der Iteration das Label des aktuellen Knoten auf das Minumum des Labels des aktuellen Knoten und des Labels des Nachbarn gesetzt. Wurde der Knoten bereits besucht und befindet er sich derzeit im Stack, wird das Label des aktuellen Knoten auf des Minimum des Labels des aktuellen Knoten und den Index des Nachbarn gesetzt. 
+
+Die zweite Bedingung trifft genau dann zu, wenn man einen Nachbarknoten findet, den man im aktuellen Rekursionsteilbaum bereits betracht hat (und der sich somit auf dem Stack befindet). \code{min(v.label, v'.index)} weist dem Label des aktuellen Knoten nun das Minumum von \code{v.label} und \code{v'.index} zu. Genau dieses Label dient zur Identifizierung der jeweiligen starken Zusammenhangskomponente. Da beim Eintreten dieser Bedingung keine weiteren Rekursionsaufrufe getätigt werden, wird der Rekursionsteilbaum nun zurückdurchlaufen.
+
+Nach der Rückkehr aus dem jeweiligen Rekursionsaufruf wird dem aktuellen Knoten nun mittels \code{min(v.label, v'.label)} genau das Label zugewiesen, dass, wie oben erläutert, genau die jeweilige starke Zusammenhangskomponente identifiziert. 
+
+Ist dies für alle Knoten geschehen, kann nun für jeden Knoten mittels seines Labels festgestellt werden, zu welcher starken Zusammenhangskomponente er gehört.
+
+Um die starke Zusammenhangskomponente zu finden, in der sich \code{z} befindet, wird im letzten Schritt von \code{strongComp(v)} geprüft, ob Label und Index von \code{v} gleich sind (dann handelt es sich um die Wurzel der SZK). Trifft dies zu, werden alle Knoten vom Stack zu einem neuen Graphen hinzugefügt. Bei diesem Graphen handelt es sich genau um die SZK, in der \code{z} enthalten ist. Diese wird dann ausgegeben.
+
+\paragraph{Laufzeitanalyse:} 
+
+Zur Initialisierung der Dictionaries erfolgt in $\bO{n}$, da über alle Knoten iteriert wird. In der \code{main}-Methode wird nun im schlimmsten Fall ebenfalls über alle Knoten iteriert, was wiederum in $\bO{n}$ erfolgt. Für jeden Knoten wird die Methode \code{strongComp(v)} aufgerufen. Die Zugriffe auf das Dictionary erfolgen in konstanter Zeit, ebenso das Pushen des Knotens auf den Stack. Für jeden Knoten wird über seine Nachbarn iteriert. Da der Graph als Adjazenzliste vorliegt, werden alle Kanten, die zu den Nachbarn zeigen, maximal 2 mal betrachtet. Demzufolge wird die \code{for}-Schleife maximal $2*m$ mal ausgeführt. Wird der Wurzelknoten der SZK von $z$ gefunden, werden alle Elemente des Stacks gepopt. Im schlimmsten Fall entspricht die SZK genau dem Graphen $G$, sodass $n$ Elemente vom Stack gepopt werden müssen. 
+
+Daraus ergibt sich eine Gesamtlaufzeit von $\bO{2n + n + m + n} = \bO{4n + m} = \bO{n+m}$.
+$\hfill\square$
+
+\paragraph{Input:} gerichteter Graph $G$, Knoten $z$
+\paragraph{Output:} starke Zusammenhangskomponente von $z$
+
+\begin{algorithm}
+	\caption{main}
+		
+	inStack = new Dictionary\;
+	visited = new Dictionary\;
+	\For{v in vertices} {
+		inStack(v) = 0\;
+		visited(v) = 0\;	
+	}
+	index = 1\;
+	stack = new Stack\;
+	
+	\For{v in vertices} {
+		\If {visited(v) == 0} {\
+			strongComp(v)\;
+		}
+	}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{strongComp(v)}
+	
+	v.index = index\;
+	v.label = index\;
+	++index\;
+	stack.push(v)\;
+	inStack(v) = 1\;
+	visited(v) = 1\;
+	\For {v' in v.neighbours} {
+		\If {visited(v') == 0} {\
+			strongComp(v')\;
+			v.label = min(v.label, v'.label)\;	
+		} \ElseIf {inStack(v') == 1} {\
+			v.label = min(v.label, v'.index)\;
+		}
+	}
+	szk\;
+	\If {v.index == v.label \&\& v == z} {\
+		szk = new Graph\;
+		\While {stack.notEmpty()} {
+			visited(stack.top()) = 0\;
+			szk.addNode(stack.pop())\;
+		}
+		print(szk)\;
+	}
+\end{algorithm}
 
 \end{document}

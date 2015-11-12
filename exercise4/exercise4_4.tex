@@ -110,9 +110,9 @@ Zunächst werden zwei Dictionaries (Mengen von Key-Value-Paaren) \code{inStack} 
 
 Nun wird über alle Knoten von $G$ iteriert. Wurde der Knoten noch nicht besucht, wird für ihn die Funktion \code{strongComp(v)} aufgerufen.
 
-In dieser Funktion wird für der Index sowie das Label des Knoten auf den aktuellen Wert der Variable \code{index} gesetzt. Anschließend wird \code{index} inkrementiert, \code{v} wird auf den Stack gepusht und \code{inStack(v)} sowie \code{visited(v)} werden auf 1 gesetzt.
+In dieser Funktion wird der Index sowie das Label des Knotens auf den aktuellen Wert der Variable \code{index} gesetzt. Anschließend wird \code{index} inkrementiert, \code{v} wird auf den Stack gepusht und \code{inStack(v)} sowie \code{visited(v)} werden auf 1 gesetzt.
 
-Nun wird über alle Nachbarn von \code{v} iteriert. Sollte dieser Nachbar noch nicht besucht worden sein, wird für ihn \code{strongComp(v)} aufgerufen und nach Abschluss der Iteration das Label des aktuellen Knoten auf das Minumum des Labels des aktuellen Knoten und des Labels des Nachbarn gesetzt. Wurde der Knoten bereits besucht und befindet er sich derzeit im Stack, wird das Label des aktuellen Knoten auf des Minimum des Labels des aktuellen Knoten und den Index des Nachbarn gesetzt. 
+Nun wird über alle Nachbarn von \code{v} iteriert. Sollte einer dieser Nachbar noch nicht besucht worden sein, wird für ihn \code{strongComp(v)} aufgerufen und nach Abschluss der Iteration das Label des aktuellen Knoten auf das Minumum des Labels des aktuellen Knoten und des Labels des Nachbarn gesetzt. Wurde der Knoten bereits besucht und befindet er sich derzeit im Stack, wird das Label des aktuellen Knoten auf des Minimum des Labels des aktuellen Knoten und den Index des Nachbarn gesetzt. 
 
 Die zweite Bedingung trifft genau dann zu, wenn man einen Nachbarknoten findet, den man im aktuellen Rekursionsteilbaum bereits betracht hat (und der sich somit auf dem Stack befindet). \code{min(v.label, v'.index)} weist dem Label des aktuellen Knoten nun das Minumum von \code{v.label} und \code{v'.index} zu. Genau dieses Label dient zur Identifizierung der jeweiligen starken Zusammenhangskomponente. Da beim Eintreten dieser Bedingung keine weiteren Rekursionsaufrufe getätigt werden, wird der Rekursionsteilbaum nun zurückdurchlaufen.
 
@@ -120,21 +120,23 @@ Nach der Rückkehr aus dem jeweiligen Rekursionsaufruf wird dem aktuellen Knoten
 
 Ist dies für alle Knoten geschehen, kann nun für jeden Knoten mittels seines Labels festgestellt werden, zu welcher starken Zusammenhangskomponente er gehört.
 
-Um die starke Zusammenhangskomponente zu finden, in der sich \code{z} befindet, wird im letzten Schritt von \code{strongComp(v)} geprüft, ob Label und Index von \code{v} gleich sind (dann handelt es sich um die Wurzel der SZK). Trifft dies zu, werden alle Knoten vom Stack zu einem neuen Graphen hinzugefügt. Bei diesem Graphen handelt es sich genau um die SZK, in der \code{z} enthalten ist. Diese wird dann ausgegeben.
+Um die starke Zusammenhangskomponente zu finden, in der sich \code{z} befindet, wird im letzten Schritt von \code{strongComp(v)} geprüft, ob Label und Index von \code{v} gleich sind (dann handelt es sich um die Wurzel der SZK). Trifft dies zu, werden alle Knoten vom Stack zu einem neuen Graphen hinzugefügt. Bei diesem Graphen handelt es sich genau um die SZK, in der \code{z} enthalten ist. Diese wird ausgegeben.
 
 \paragraph{Laufzeitanalyse:} 
 
-Zur Initialisierung der Dictionaries erfolgt in $\bO{n}$, da über alle Knoten iteriert wird. In der \code{main}-Methode wird nun im schlimmsten Fall ebenfalls über alle Knoten iteriert, was wiederum in $\bO{n}$ erfolgt. Für jeden Knoten wird die Methode \code{strongComp(v)} aufgerufen. Die Zugriffe auf das Dictionary erfolgen in konstanter Zeit, ebenso das Pushen des Knotens auf den Stack. Für jeden Knoten wird über seine Nachbarn iteriert. Da der Graph als Adjazenzliste vorliegt, werden alle Kanten, die zu den Nachbarn zeigen, maximal 2 mal betrachtet. Demzufolge wird die \code{for}-Schleife maximal $2*m$ mal ausgeführt. Wird der Wurzelknoten der SZK von $z$ gefunden, werden alle Elemente des Stacks gepopt. Im schlimmsten Fall entspricht die SZK genau dem Graphen $G$, sodass $n$ Elemente vom Stack gepopt werden müssen. 
+Die Initialisierung der Dictionaries erfolgt in $\bO{n}$, da über alle Knoten iteriert wird. In der \code{main}-Methode wird nun im schlimmsten Fall ebenfalls über alle Knoten iteriert, was wiederum in $\bO{n}$ erfolgt. Für jeden Knoten wird die Methode \code{strongComp(v)} aufgerufen. Die Zugriffe auf das Dictionary erfolgen in konstanter Zeit, ebenso das Pushen des Knotens auf den Stack. Für jeden Knoten wird über seine Nachbarn iteriert. Da der Graph als Adjazenzliste vorliegt, werden alle Kanten, die zu den Nachbarn zeigen, maximal 2 mal betrachtet. Demzufolge wird die \code{for}-Schleife maximal $2*m$ mal ausgeführt. Wird der Wurzelknoten der SZK von $z$ gefunden, werden alle Elemente des Stacks gepopt. Im schlimmsten Fall entspricht die SZK genau dem Graphen $G$, sodass $n$ Elemente vom Stack gepopt werden müssen. 
 
 Daraus ergibt sich eine Gesamtlaufzeit von $\bO{2n + n + m + n} = \bO{4n + m} = \bO{n+m}$.
 $\hfill\square$
 
-\paragraph{Input:} gerichteter Graph $G$, Knoten $z$
-\paragraph{Output:} starke Zusammenhangskomponente von $z$
-
 \begin{algorithm}
-	\caption{main}
-		
+	\caption{main}	
+	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+	
+	\Input{gerichteter Graph $G$, Knoten $z$}
+	\Output{starke Zusammenhangskomponente von $z$}
+	\BlankLine
+	
 	inStack = new Dictionary\;
 	visited = new Dictionary\;
 	\For{v in vertices} {

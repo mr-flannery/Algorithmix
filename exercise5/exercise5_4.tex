@@ -95,7 +95,7 @@
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
-\title{Übung 4}
+\title{Übung 5}
 \date{} 
 \pagestyle{myheadings}
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
@@ -103,82 +103,100 @@
 \maketitle % erzeugt den Kopf
  
 \section*{Aufgabe 4}
+\subsubsection*{Idee}
+Grundsätzlich funktioniert der Algorithmus wie Mergesort, mit den Ausnahmen, dass wir einen zusätzlichen Array statt der Teilarrays erstellen und uns Positionen im gesamten Array merken um die einzelnen Teile zu mergen.
 
-\paragraph{Idee:} Der Algorithmus basiert im wesentlich auf dem Algorithmus von Tarjan, bei welchem es sich um eine modifizierte Tiefensuche handelt. Dabei wird an jeden Knoten bei seiner erstmaligen Betrachtung ein Index und ein Label vergeben. Der Index dient der Nummerierung der Knoten und das Label bestimmt die Zugehörigkeit zu einer starken Zusammenhangskomponente.
+Die Funktion \code{unsortedness} ist in zwei Varianten vorhanden, um mit der ersten das Interface für den Aufruf bereitzustellen und einen Hilfsarray anzulegen. Die eigentliche \code{\_unsortedness} Funktion entspricht dem Mergesort Algorithmus mit der Ausnahme, dass keine sortierten Arrays sondern die Unsortiertheit des Arrays des betrachteten Teils des Arrays zurückgegeben wird. Die erste Schleife in der Funktion \code{Merge} sichert den aktuellen Zustand des Arrays. In der zweiten Schleife wird über den aktuellen Teilbereich des Arrays iteriert, um die in ihm enthaltenen Teilarrays zu mergen. Die ersten beiden Fälle der Fallunterscheidung fangen die Fälle ab, dass entweder der linke oder rechte Teilarray bereits leer sind und sich im jeweils anderen noch ein Element befindet (Mehr ist nicht möglich, da wir immer in der Mitte teilen). Die letzten beiden Fälle führen den Hauptbestandteil des Mergens aus. Interessant ist der Fall, dass ein Element in dem rechten Teilarray gemergt wird. In diesem Fall muss das Element an X größeren Elementen vorbeigemergt werden. X ist dabei die Anzahl der noch nicht gemergten Elemente im linken Teilarray (mid - i + 1). Nach der Rückgabe werden alle Unsortedness Summanden summiert um die Unsortedness des gesamten Arrays zu erhalten (Nebenbei liegt der Array a nun sortiert vor).
 
-Zunächst werden zwei Dictionaries (Mengen von Key-Value-Paaren) \code{inStack} und \code{visited} erstellt und für jeden Knoten mit 0 initialisiert. Dabei steht jeweils 0 für nicht im Stack/nicht besucht und 1 für im Stack/besucht. Zusätzlich gibt es eine Variable \code{index}, die initial den Wert 1 hat sowie einen Stack, der initial leer ist. Der Einfachheit halber wird davon ausgegangen, dass \code{index} und \code{z} global sichtbar sind.
+\subsubsection*{Algorithmus}
 
-Nun wird über alle Knoten von $G$ iteriert. Wurde der Knoten noch nicht besucht, wird für ihn die Funktion \code{strongComp(v)} aufgerufen.
-
-In dieser Funktion wird der Index sowie das Label des Knotens auf den aktuellen Wert der Variable \code{index} gesetzt. Anschließend wird \code{index} inkrementiert, \code{v} wird auf den Stack gepusht und \code{inStack(v)} sowie \code{visited(v)} werden auf 1 gesetzt.
-
-Nun wird über alle Nachbarn von \code{v} iteriert. Sollte einer dieser Nachbar noch nicht besucht worden sein, wird für ihn \code{strongComp(v)} aufgerufen und nach Abschluss der Iteration das Label des aktuellen Knoten auf das Minumum des Labels des aktuellen Knoten und des Labels des Nachbarn gesetzt. Wurde der Knoten bereits besucht und befindet er sich derzeit im Stack, wird das Label des aktuellen Knoten auf des Minimum des Labels des aktuellen Knoten und den Index des Nachbarn gesetzt. 
-
-Die zweite Bedingung trifft genau dann zu, wenn man einen Nachbarknoten findet, den man im aktuellen Rekursionsteilbaum bereits betracht hat (und der sich somit auf dem Stack befindet). \code{min(v.label, v'.index)} weist dem Label des aktuellen Knoten nun das Minumum von \code{v.label} und \code{v'.index} zu. Genau dieses Label dient zur Identifizierung der jeweiligen starken Zusammenhangskomponente. Da beim Eintreten dieser Bedingung keine weiteren Rekursionsaufrufe getätigt werden, wird der Rekursionsteilbaum nun zurückdurchlaufen.
-
-Nach der Rückkehr aus dem jeweiligen Rekursionsaufruf wird dem aktuellen Knoten nun mittels \code{min(v.label, v'.label)} genau das Label zugewiesen, dass, wie oben erläutert, genau die jeweilige starke Zusammenhangskomponente identifiziert. 
-
-Ist dies für alle Knoten geschehen, kann nun für jeden Knoten mittels seines Labels festgestellt werden, zu welcher starken Zusammenhangskomponente er gehört.
-
-Um die starke Zusammenhangskomponente zu finden, in der sich \code{z} befindet, wird im letzten Schritt von \code{strongComp(v)} geprüft, ob Label und Index von \code{v} gleich sind (dann handelt es sich um die Wurzel der SZK). Trifft dies zu, werden alle Knoten vom Stack zu einem neuen Graphen hinzugefügt. Bei diesem Graphen handelt es sich genau um die SZK, in der \code{z} enthalten ist. Diese wird ausgegeben.
-
-\paragraph{Laufzeitanalyse:} 
-
-Die Initialisierung der Dictionaries erfolgt in $\bO{n}$, da über alle Knoten iteriert wird. In der \code{main}-Methode wird nun im schlimmsten Fall ebenfalls über alle Knoten iteriert, was wiederum in $\bO{n}$ erfolgt. Für jeden Knoten wird die Methode \code{strongComp(v)} aufgerufen. Die Zugriffe auf das Dictionary erfolgen in konstanter Zeit, ebenso das Pushen des Knotens auf den Stack. Für jeden Knoten wird über seine Nachbarn iteriert. Da der Graph als Adjazenzliste vorliegt, werden alle Kanten, die zu den Nachbarn zeigen, maximal 2 mal betrachtet. Demzufolge wird die \code{for}-Schleife maximal $2*m$ mal ausgeführt. Wird der Wurzelknoten der SZK von $z$ gefunden, werden alle Elemente des Stacks gepopt. Im schlimmsten Fall entspricht die SZK genau dem Graphen $G$, sodass $n$ Elemente vom Stack gepopt werden müssen. 
-
-Daraus ergibt sich eine Gesamtlaufzeit von $\bO{2n + n + 2m + n} = \bO{4n + 2m} = \bO{n+m}$.
-$\hfill\square$
-
-\begin{algorithm}
-	\caption{main}	
+\begin{algorithm}[H]
+	\caption{unsortedness}
 	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
 	
-	\Input{gerichteter Graph $G$, Knoten $z$}
-	\Output{starke Zusammenhangskomponente von $z$}
+	\Input{Array a}
+	\Output{Unsortiertheit n des Array a}
 	\BlankLine
-	
-	inStack = new Dictionary\;
-	visited = new Dictionary\;
-	\For{v in vertices} {
-		inStack(v) = 0\;
-		visited(v) = 0\;	
-	}
-	index = 1\;
-	stack = new Stack\;
-	
-	\For{v in vertices} {
-		\If {visited(v) == 0} {\
-			strongComp(v)\;
-		}
-	}
+	a' = Array[a.length()]\;
+	mid = min + floor((max - min) / 2)\;
+	unsortedness = \_unsortedness(a, a', 1, a.length(), mid)\;	
+	\BlankLine
+	return unsortedness\;	
 \end{algorithm}
 
-\begin{algorithm}
-	\caption{strongComp(v)}
+\begin{algorithm}[H]
+	\caption{\_unsortedness}
+	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
 	
-	v.index = index\;
-	v.label = index\;
-	++index\;
-	stack.push(v)\;
-	inStack(v) = 1\;
-	visited(v) = 1\;
-	\For {v' in v.neighbours} {
-		\If {visited(v') == 0} {\
-			strongComp(v')\;
-			v.label = min(v.label, v'.label)\;	
-		} \ElseIf {inStack(v') == 1} {\
-			v.label = min(v.label, v'.index)\;
-		}
-	}
-	szk\;
-	\If {v.index == v.label \&\& v == z} {\
-		szk = new Graph\;
-		\While {stack.notEmpty()} {
-			visited(stack.top()) = 0\;
-			szk.addNode(stack.pop())\;
-		}
-		print(szk)\;
-	}
+	\Input{Array a, Array a', min, max}
+	\Output{Unsortiertheit n von min bis max}
+	\BlankLine
+	\If {(min = max)} { return 0\; }
+	
+	mid = min + floor((max - min) / 2)\;
+	unsortedness = \_unsortedness(a, a', min, mid)\;
+	unsortedness += \_unsortedness(a, a', mid + 1, max)\;
+	unsortedness += merge(a, a', min, max)\;
+	\BlankLine
+	return unsortedness\;
 \end{algorithm}
+
+\begin{algorithm}[H]
+	\caption{merge}
+	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+	
+	\Input{Array a, Array a', min, max, mid}
+	\Output{Unsortiertheit n von min bis max}
+	\BlankLine
+	\For {(k = min to max)} {\
+		a'[k] = a[k]\;
+	}
+	unsortedness = 0\;
+	\For {(k = min to max)} {\
+		\If {(i > mid)} {\
+			a[k] = a'[j]\;
+			j += 1;
+		}
+		\ElseIf {(j > max)} {\
+			a[k] = a'[i]\;
+			i += 1\;
+		}
+		\ElseIf {(a'[j] < a'[i])} {\
+			a[k] = a'[j]\;
+			j += 1\;
+			unsortedness += (mid - i + 1)\;
+		}
+		\Else {\
+			a[k] = a'[i]\;
+			i += 1\;
+		}
+	}
+	\BlankLine
+	return unsortedness\;
+\end{algorithm}
+
+\subsubsection*{Korrektheit}
+Korrektheitsbedingungen:
+\newline
+(1) unsortedness terminiert
+\newline
+(2) unsortedness gibt die Unsortiertheit von des Eingabearrays zurück
+
+(1) ist erfüllt, weil nach log(n) Schritten zuerst alle Teilbereiche des Arrays nur noch die Länge 1 besitzen und anschließend über jeden der erzeugten Teilbereiche zwei Mal iteriert wird.
+
+Für (2) muss gezeigt werden, dass eine Schleifeninvariante für den angepassten Mergesort existiert und dass die zurückgegebene Unsortiertheit des Teilbereichs korrekt ist. Ist die Unsortiertheit für einen gemergten Teilbereich korrekt, so stimmt sie auch in jedem weiteren Mergeschritt. Die Schleifeninvariante lautet wie folgt:
+
+$ A \text{ (Vor der Schleife) } \forall i: i = k, a[i] \le a[k]$ \\
+$ B \text{ (Schleifeninvariante) } \forall i: min \le i \le k, a[min] \le a[i] \le a[k]$ \\
+$ B \text{ (Schleifenende) } \forall i: min \le i \le max, a[min] \le a[i] \le a[max]$
+
+Am Schleifenende wurden alle Elemente in a überschrieben, da am Anfang eine Kopie von a gemacht wird und anschließend von der Kopie Elemente in der Art und Weise zurückkopiert werden, dass ($ min \le i \le mid < j \le max $) jedes Element lediglich einmal an eine andere Stelle geschrieben wurde. Es handelt sich deshalb bei a nach dem Merge nur um eine Permutation seiner selbst. Die Unsortiertheit wird genau dann um X Elemente erhöht, wenn sie vom rechten Teil merged während der linke nicht leer ist. X entspricht der Anzahl der Elemente im linken Teil, welche noch nicht gemerged wurden ($ mid - 1 + 1 $). In den Teilbereichen liegen zwei sortierte Teile vor, deshalb muss, wenn ein Element von rechts vor X Elementen von links gemergt wird, die Unsortiertheit des Elementes bezüglich des betrachteten Teilbereichs X betragen.
+
+Da der Algorithmus terminiert, eine Schleifeninvariante für den angepassten Mergesort existiert und aufbauend auf diesem Mergesort eine Zahlweise der Unsortheit gezeigt wurde, ist somit die Korrektheit des Algorithmus gezeigt.
+
+$\hfill \square$
+
+\subsubsection*{Laufzeit}
+Äquivalent zur Laufzeit des Mergesort gilt für den Aufwand die Teilarrays zu sortieren $ T(\lfloor \frac{n}{2} \rfloor) + T(\lceil \frac{n}{2} \rceil) $. In der Mergephase jedoch wird zweimal über die komplette Länge des Arrays iteriert, was folgenden Laufzeit $ T(n) = T(\lfloor \frac{n}{2} \rfloor) + 2 * n $ ergibt. Nach dem 2. Fall ergibt sich folgende Worst-Case Laufzeit: $ \bO{2*n*\log {n}} = \bO{n*\log {n}} $.
 
 \end{document}

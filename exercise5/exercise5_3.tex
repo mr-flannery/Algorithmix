@@ -95,7 +95,7 @@
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
-\title{Übung 4}
+\title{Übung 5}
 \date{} 
 \pagestyle{myheadings}
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
@@ -104,33 +104,42 @@
 
 \section*{Aufgabe 3}
 
-\paragraph{Annahme} Der folgende Algorithmus geht davon aus, dass alle Elemente im gegebenen Array voneinander verschieden sind. Bei ausschließlich gleichen Elementen müssten alle Elemente untersucht werden, damit eine Aussage über lokale Minima getroffen werden kann. Hierfür käme nur eine lineare Suche mit der Laufzeit $\bO{n}$ in Frage. Für einen Algorithmus mit besserer Laufzeit ergänzen wir die Bedingung, dass alle Elemente im Array voneinander verschieden sein müssen.
+\paragraph{Zu Zeigen:}
+\code{DFS}$(G,v,w) = \ $\code{true}$ \ \Rightarrow v \rightarrow_G w$
 
-\paragraph{Idee} Wir überprüfen zuerst ob ein Array der Länge 1 vorliegt, in diesem Fall in das einzige Minimum gefunden, da der Index keine Nachbar hat, somit das kleinste Element im Array ist und damit auch ein lokales Minimum. \\
-Für jeden Array mit einer Länge größer 1 wählen wir den Index in der Mitte und vergleichen ihn mit seinen Nachbarn. Im einfachsten Fall ist er am kleinsten und wir haben ein lokales Minimum gefunden. Sollte der linke Nachbar kleiner sein, suchen wir im Teilarray vom Anfang bis zum linken Nachbarn weiter nach dem Minimum. Ist der rechte Nachbar kleiner so wird im Teilarray vom rechten Nachbarn bis zum Ende nach dem Minimum gesucht.
+Um dies zu zeigen, wird folgende Schleifeninvariante benutzt:
 
-\begin{algorithm}[ht!]
-	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
-	
-	\Input{Array a der Länge n $\ge$ 1}
-	\Output{Index i $\le$ n, dessen Wert ein lokales Minimum ist}
-	\BlankLine
-	\If {(n == 1)} {\
-		return 1\;
-	}
-	
-	\If{(n/2 > 1 AND a[n/2] > a[n / 2  - 1])} {\
-		return findLocMin(a[1, n/2 - 1])\;
-	} \ElseIf{(n/2 < n AND a[n/2] > a[n/2 + 1])} {\
-		return findLocMin(a[n/2 + 1, n])\;
-	} \Else {\
-		return n/2\;
-	}	
-\end{algorithm}
+\begin{align}
+	\forall u \in V: v \rightarrow_G u \Rightarrow visited[u] = true
+\end{align}
 
-\paragraph{Laufzeitanalyse} Nach jedem Rekursionsschritt müssen maximal noch die Hälfte der Elemente aus den letzten Schritt betrachtet werden. Zusätzliche Kosten haben maximal konstante Laufzeit, weil keine weiteren Operationen auf dem Eingabearray ausgeführt werden. Die entsprechende Rekurrenz lautet: T(n) = T(n/2) + c. Mit Hilfe des 2. Falles des Mastertheorems ($c \in \bO{n^{\log_2{(1)}}} \Leftrightarrow c \in \bO{1}$) ergibt sich eine Laufzeit in $\bO{\log(n)}$.
+Sprich wenn es einen Pfad von $v$ nach $u$ in $G$ gibt, muss sich $u$ auch auf dem Stack befinden. 
 
-\paragraph{Korrektheit} Hat der Array die Länge 1, so findet der Algorithmus das Minimum mit Index 1. Für alle weiteren Größen wird die Mitte des Arrays auf ein Minimum überprüft. Sollte in dieser Stelle kein Minimum sein, so wird einer der Nachbarn als Begrenzung für ein neues kleineres Array gewählt. Somit findet der Algorithmus in der Mitte ein existierendes Minimum. Sollte eine der beiden Seiten kleiner sein, so ist die Annahme, dass dort ein Minimum existieren muss und der Rest des Arrays wird nicht mehr betrachtet. Diese Annahme ist korrekt, weil bereits eine Zahl gefunden wurde, welche kleiner ist als die Mitte. Im entsprechenden Teilarray muss demzufolge entweder eine noch kleinere Zahl vorhanden sein (spätestens einer der Ränder des Arrays muss ein Minimum sein), oder der direkte Nachbar ist das Minimum (Ergibt sich aus der Annahme, dass alle Elemente voneinander verschieden sind).
+Zunächst zeigen wir die Gültigkeit von (1) vor Ausführung der Schleife, d.h. folgende Aussage muss gelten:
 
+\begin{align*}
+	v \rightarrow_G v \Rightarrow visited[v] = true
+\end{align*}
+
+$v$ ist der Startknoten, von dem aus gesucht wird. Vor Beginn der Schleife wird $visited[v]$ auf true gesetzt, die Aussage ist also offensichtlich gültig.
+
+Um die Gültigkeit von (1) während der Schleife zu beweisen, muss gezeigt werden, dass wenn (1) für $u$ gilt, dass es auch für jeden Nachbarknoten $u'$ von $u$ gilt.
+
+\paragraph{Fall 1:} $v \rightarrow_G u'$
+
+Für diesen Fall folgt $visited[u'] = true$ direkt aus (1).
+
+\paragraph{Fall 2:} $v \nrightarrow_G u'$
+
+Für diesen Fall nehmen wir an $\exists v' \in V: v \rightarrow_G v' \wedge v' \rightarrow_G u'$. $u'$ ist also ein Nachbarknoten von $v'$, zu dem bereits ein Pfad exisitiert und für den demzufolge auch $visited[v'] = true$ gelten muss. Also muss $u'$ im nächsten Schleifendurchlauf gefunden werden und $visited[u']$ wird auf $true$ gesetzt. (1) gilt also.
+
+Nach der Abschluss der Schleife wurden alle Knoten in G gefunden, zu denen es einen Pfad von $v$ gibt. Wie gezeigt wird für alle diese Knoten $visited$ auf $true$ gesetzt. (1) gilt also auch nach Abschluss der Schleife. 
+
+Somit Verbindung mit dem Beweis aus der Vorlesung ist somit folgende Aussage bewiesen:
+
+\begin{align*}
+	(G,v,w) = true \Leftrightarrow v \rightarrow_G w
+\end{align*}
+$	\hfill\square$
 
 \end{document}

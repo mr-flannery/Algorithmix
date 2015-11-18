@@ -95,7 +95,7 @@
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
-\title{Übung 4}
+\title{Übung 5}
 \date{} 
 \pagestyle{myheadings}
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
@@ -104,25 +104,49 @@
 
 \section*{Aufgabe 2}
 
-Wir nutzen jeweils einen Stack um die Operationen \code{enqueue} bzw. \code{dequeue} zu implementieren. Das heißt wir nennen einen Stack den \code{enqueue-Stack} und den anderen den \code{dequeue-Stack}.
+Um zu zeigen, dass der Algorithmus korrekt ist, stellen wir folgende Korrektheitsbedingung auf:
 
-\code{enqueue} und \code{dequeue} können grundsätzlich in konstanter Zeit ausgeführt werden. Bei jeder \code{enqueue}-Operationen wird ein Element auf den \code{enqueue-Stack} gelegt und bei jeder \code{dequeue}-Operation wird ein Element vom \code{dequeue-Stack} entfernt. Sollte bei Aufruf der \code{dequeue}-Operation der \code{dequeue-Stack} leer sein, müssen zunächst alle Elemente des \code{enqueue-Stacks} auf den \code{dequeue-Stack} gelegt werden (im Folgenden \code{shift} genannt). Jedes Element muss also vom \code{enqueue-Stack} mittels \code{pop} entfernt und mittels \code{push} auf den \code{dequeue-Stack} gelegt werden. Wir gehen dabei davon aus, dass \code{pop} und \code{push} ebenfalls in konstanter Zeit ausgeführt werden können. Liegen $n$ Elemente auf dem \code{enqueue-Stack}, kostet die \code{shift}-Operation also genau $2*n$.
+\begin{itemize}
+	\item[1)] Der Algorithmus terminiert.
+	\item[2)] Wenn $\exists i \le n \forall j \le n: M[i,j] = 1 \wedge i \not= j$ gilt, soll der Algorithmus $yes$ zurückgeben.\\
+\end{itemize}
 
-Wir betrachtetn nun die amortisierte Laufzeit dieser Queue-Implementierung mithilfe der Guthabenmethode. Dazu wählen wir folgende Besteuerungsmethode: Um die Kosten der \code{shift}-Operation zu decken, zahlt \code{enqueue} bei jedem Aufruf $2c$ auf das Guthabenkonto ein. Daraus ergibt sich folgende Kostengleichung: 
+Dass der Algorithmus terminert ist leich erkennbar. Beide Schleifen iterieren von 2 bzw. von 1 bis $n$, es werden also maximal $2n-3$ Schleifendurchläufe durchgeführt. Alle anderen Schritte werden genau einmal ausgeführt. 
 
-\begin{align*}
-	a_i = 3*e_i + d_i + 0*s_i
-\end{align*}
+Die zweite Bedingung wird von der zweiten Schleife des Algorithmus geprüft. Um zu zeigen, dass die zweite Schleife das korrekte Ergebnis liefert, muss gezeigt werden, dass die erste Schleife ein Element findet, dass die SuperWinner-Bedingung erfüllen kann, also eine Mannschaft, die alle betrachteten Spiele gewonnen hat.
 
-Dabei sind $e_i$ die Kosten der \code{enqueue}-Operation, $d_i$ die Kosten der \code{dequeue}-Operation und $s_i$ die Kosten der \code{shift}-Operation.
+Dazu nutzen wir folgende Schleifeninvariante:
 
-Nun bleibt zu zeigen, dass $a_0 = 0$ (1) und $a_i \ge 0$ (2) gelten. (1) gilt offensichtlich, da bei einer Folge von 0 Operationen kein Guthaben eingezahlt wird. (2) gilt ebenfalls, da \code{shift} genau zwei mal soviel Guthaben verbraucht, wie \code{enqueue}-Operationen seit dem letzten \code{shift} ausgeführt worden sind. Da jedes \code{enqueue} genau $2c$ einzahlt, ist das Guthaben nach jedem \code{shift} genau 0.
+\begin{align}
+	\forall k \in V: k < j \wedge k \not= i: k \not= SuperWinner
+\end{align}
 
-Für eine belieibige Folge von $n$ Operationen ergibt sich somit eine Gesamtlaufzeit von
+Zuerst wird gezeigt, dass (1) zu Beginn der Schleife gilt. Inital gelten $i=1$ und $j=2$. Somit gibt es kein $k \in V$, dass die Bedingung erfüllt. (1) gilt also.
 
-\begin{align*}
-	T(n) = 3*n + n + 0*n = \bO{4n} = \bO{n}
-\end{align*}
-$\hfill \square$
+Anschließend soll die Gültigkeit von (1) während der Ausführung der Schleife gezeigt werden. Dazu werden folgende Fälle betrachtet:
+
+\paragraph{Fall 1:} $k = i$
+
+Für diesen Fall ist die Voraussetzung für (1) nicht erfüllt, (1) ist also gültig.
+
+\paragraph{Fall 2:} $k < i$
+
+\subparagraph{Fall 2.1:}
+
+Der Algorithmus hat Zeile $k$ bereits besucht. Da $k \not= i$ muss also $\exists y \in V: A[k,y] = 0$ gelten. $k$ hat also bereits ein Spiel verloren und kann die SuperWinner-Bedingung nicht erfüllen.
+
+\subparagraph{Fall 2.2:}
+
+Der Algorithmus hat Zeile $k$ nicht besucht. Zeile $k$ wurde also übersprungen da $\exists y \in V: A[y,k] = 1$ gilt. $k$ hat also bereits ein Spiel verloren und kann die SuperWinner-Bedingung nicht erfüllen.
+
+\paragraph{Fall 3:} $k > i$
+
+Zu Beginn jeder Schleife gilt $j > i$. Zusammen mit $k > i$ müsste also $j > k > i$ gelten. Dies heißt, dass $k$ bereits ein Spiel verloren haben muss, da sonst $k = i$ gelten müsste. Also gilt (1) auch für diesen Fall.
+
+Nach Abschluss der Schleife gilt $k = j$, die Bedingung ist nicht erfüllt und (1) gilt.
+
+Somit ist gezeigt, dass die erste Schleife ein korrektes Ergebnis für die zweite Schleife liefert, die somit die zweite Korrektheitsbedingung erfüllt. 
+
+$\hfill\square$
 
 \end{document}

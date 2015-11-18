@@ -1,0 +1,136 @@
+\documentclass[12pt]{scrartcl}%{article} % Beginn der LaTeX-Datei
+
+%% twocolumn
+
+\usepackage{amsmath,amssymb}  % erleichtert Mathe 
+\usepackage{enumerate}% schicke Nummerierung
+
+\usepackage{graphicx} % für Grafik-Einbindung
+%\usepackage{hyperref}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[boxed]{algorithm2e}
+\usepackage{parskip}
+ % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
+\usepackage[utf8]{inputenc}  % für Unix-Systeme
+  % ermöglicht die direkte Eingabe von Umlauten und ß
+  % evt. obige Zeile ersetzen durch
+  % \usepackage[ansinew]{inputenc}  % für Windows
+  % \usepackage[applemac]{inputenc} % für den Mac
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ntheorem
+%
+\usepackage[thmmarks,amsmath,hyperref,noconfig]{ntheorem} 
+  % erlaubt es, Sätze, Definitionen etc. einfach durchzunummerieren.
+\newtheorem{satz}{Satz}[section] % Nummerierung nach Abschnitten
+\newtheorem{hilfssatz}[satz]{Hilfssatz}
+\newtheorem{kor}[satz]{Korollar}
+
+\theorembodyfont{\upshape}
+\newtheorem{beispiel}[satz]{Beispiel}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{definition}[satz]{Definition} %[section]
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\normalfont}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{_\blacksquare}}
+\newtheorem{beweis}{Beweis}
+\qedsymbol{\ensuremath{_\blacksquare}}
+%\theoremclass{LaTeX}
+%
+% Ende ntheorem
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\pagestyle{empty}
+%
+% Ändern der bedruckten Fläche der Seite
+% \addtolength{\textwidth}{3cm}  % Befehl mit zwei Argumenten
+% \addtolength{\textheight}{3cm}
+% \hoffset-2cm % verschiebt das Textfenster nach links
+% \voffset-5mm % verschiebt das Textfenster nach oben
+%
+\parindent=0pt %% keine Einzug zu Beginn von Abs\"atzen
+%\parskip=2mm   %% erzeugt einen zusätzliche Zeilenabstand zwischen
+                %% Absätzen. Nötig bei \parindent=0pt
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ermöglicht, farbigen Text zu drucken.
+\usepackage{color}
+% Und nun werden die Farben definiert - daran können Sie nach Belieben selber rumspielen.
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{darkred}{rgb}{0.3,0,0}
+\definecolor{darkgreen}{rgb}{0,0.3,0}
+\definecolor{darkblue}{rgb}{0,0,0.3}
+\definecolor{pink}{rgb}{0.78,0.09,0.51}
+\definecolor{purple}{rgb}{0.28,0.24,0.55}
+\definecolor{orange}{rgb}{1,0.6,0.0}
+\definecolor{grey}{rgb}{0.4,0.4,0.4}
+\definecolor{aquamarine}{rgb}{0.4,0.8,0.65}
+
+
+\DeclareMathOperator{\GL}{GL} % einige Macro, siehe am Ende Abschn. 2
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cP}{{\mathcal P}}
+\newcommand{\bO}[1]{\mathcal O(#1)}
+\newcommand{\bT}[1]{\Theta (#1)}
+\newcommand{\bOg}[1]{\Omega (#1)}
+
+% Code-Macro, wenn man mal etwas als Code highlighten möchte
+\newcommand{\code}[1]{\lstinline[basicstyle=\ttfamily\color{black}]{#1}}
+
+\begin{document}
+
+\author{Dennis Hempfing, Sebastian Koall}
+\title{Übung 4}
+\date{} 
+\pagestyle{myheadings}
+\markright{\hfill Dennis Hempfing, Sebastian Koall}
+
+\maketitle % erzeugt den Kopf
+
+\section*{Aufgabe 3}
+
+\paragraph{Annahme} Der folgende Algorithmus geht davon aus, dass alle Elemente im gegebenen Array voneinander verschieden sind. Bei ausschließlich gleichen Elementen müssten alle Elemente untersucht werden, damit eine Aussage über lokale Minima getroffen werden kann. Hierfür käme nur eine lineare Suche mit der Laufzeit $\bO{n}$ in Frage. Für einen Algorithmus mit besserer Laufzeit ergänzen wir die Bedingung, dass alle Elemente im Array voneinander verschieden sein müssen.
+
+\paragraph{Idee} Wir überprüfen zuerst ob ein Array der Länge 1 vorliegt, in diesem Fall in das einzige Minimum gefunden, da der Index keine Nachbar hat, somit das kleinste Element im Array ist und damit auch ein lokales Minimum. \\
+Für jeden Array mit einer Länge größer 1 wählen wir den Index in der Mitte und vergleichen ihn mit seinen Nachbarn. Im einfachsten Fall ist er am kleinsten und wir haben ein lokales Minimum gefunden. Sollte der linke Nachbar kleiner sein, suchen wir im Teilarray vom Anfang bis zum linken Nachbarn weiter nach dem Minimum. Ist der rechte Nachbar kleiner so wird im Teilarray vom rechten Nachbarn bis zum Ende nach dem Minimum gesucht.
+
+\begin{algorithm}[ht!]
+	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+	
+	\Input{Array a der Länge n $\ge$ 1}
+	\Output{Index i $\le$ n, dessen Wert ein lokales Minimum ist}
+	\BlankLine
+	\If {(n == 1)} {\
+		return 1\;
+	}
+	
+	\If{(n/2 > 1 AND a[n/2] > a[n / 2  - 1])} {\
+		return findLocMin(a[1, n/2 - 1])\;
+	} \ElseIf{(n/2 < n AND a[n/2] > a[n/2 + 1])} {\
+		return findLocMin(a[n/2 + 1, n])\;
+	} \Else {\
+		return n/2\;
+	}	
+\end{algorithm}
+
+\paragraph{Laufzeitanalyse} Nach jedem Rekursionsschritt müssen maximal noch die Hälfte der Elemente aus den letzten Schritt betrachtet werden. Zusätzliche Kosten haben maximal konstante Laufzeit, weil keine weiteren Operationen auf dem Eingabearray ausgeführt werden. Die entsprechende Rekurrenz lautet: T(n) = T(n/2) + c. Mit Hilfe des 2. Falles des Mastertheorems ($c \in \bO{n^{\log_2{(1)}}} \Leftrightarrow c \in \bO{1}$) ergibt sich eine Laufzeit in $\bO{\log(n)}$.
+
+\paragraph{Korrektheit} Hat der Array die Länge 1, so findet der Algorithmus das Minimum mit Index 1. Für alle weiteren Größen wird die Mitte des Arrays auf ein Minimum überprüft. Sollte in dieser Stelle kein Minimum sein, so wird einer der Nachbarn als Begrenzung für ein neues kleineres Array gewählt. Somit findet der Algorithmus in der Mitte ein existierendes Minimum. Sollte eine der beiden Seiten kleiner sein, so ist die Annahme, dass dort ein Minimum existieren muss und der Rest des Arrays wird nicht mehr betrachtet. Diese Annahme ist korrekt, weil bereits eine Zahl gefunden wurde, welche kleiner ist als die Mitte. Im entsprechenden Teilarray muss demzufolge entweder eine noch kleinere Zahl vorhanden sein (spätestens einer der Ränder des Arrays muss ein Minimum sein), oder der direkte Nachbar ist das Minimum (Ergibt sich aus der Annahme, dass alle Elemente voneinander verschieden sind).
+
+
+\end{document}

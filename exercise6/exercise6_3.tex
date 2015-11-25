@@ -103,5 +103,16 @@
 \maketitle % erzeugt den Kopf
 
 \section*{Aufgabe 3}
+\subsubsection*{a)}
+Gesucht ist $\bOg{\log{(n)}}$ für den Algorithmus. Der Adversary kann auf jede Frage der Form $x < a[i]$ oder $x > a[i]$ mit dem jeweils größeren der beiden Teile antworten. Um möglichst wenige Fragen stellen zu müssen, ist die Frage mit zwei möglichen gleichlangen Ergebnissen am sinnvollsten. Der Adversary kann in diesem Fall bei jeder Teilung einen der beiden Teilbereiche zurückgeben. Somit muss der verbleibende Array solange halbiert werden, bis nur noch 1 Element im betrachteten Array ist. Das übriggebliebene Element muss dann das Ergebnis x sein. Die Anzahl der nötigen Schritte ist somit genau $ \log {(n)}$.
+
+\subsubsection*{b)}
+Anfragen der Form $x < a[i]$ oder $x > a[i]$ resultieren in jeweils zwei Teilarrays, welche in Frage kommen. Unsere Eingabemenge ist n. Nach dem informationstheoretischen Argument müssen $\log_2{(n)}$ Fragen gestellt werden. Daraus resultiert auch die Argumentation mit dem informationstheoretischen Argument in einer Laufzeit von $\bOg{\log{(n)}}$.
+
+\subsubsection*{c)}
+Für ein beliebiges aber festes k werden k + 1 Teilarrays untersucht. Dementsprechend ist die Größe der betrachteten Teilarrays nach $log_{k+1}{(n)}$ auf 1 gesunken. Auf die Frage in welchem Teil sich x befindet kann der Adversary maximal nur $log_{k+1}{(n)}$ antworten und somit die Rückgabe des richtigen Ergebnisses verzögern. Daraus ergibt sich eine untere Schranke $\bOg{\log_{k + 1}{(n)}}$.  
+
+\subsubsection*{d)}
+Bei der Argumentation mit dem informationstheoretischen Argument ergibt sich die Zahl der möglichen Antworten aufgrund der Eingabe. Die Anzahl beträgt genau k + 1. Aus k  + 1 und der Größe der Eingabemenge n ergibt sich somit eine Mindestanzahl von $\log_{k + 1}{(n)}$ Schritten. Die untere Schranke ist somit $\bOg{\log_{k + 1}{(n)}}$.
 
 \end{document}

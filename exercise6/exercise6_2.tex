@@ -113,4 +113,35 @@ Im zweiten Fall gibt es mindestens einen Match. In diesem Fall wird der Gegenspi
 Betrachten wir nun das gleiche Problem für alle Paare von Politikern. Alle Anfragen haben nun die Form \glqq Zeige mir für ein beliebiges, nicht befragtes Paar Politiker $i, j$, ob sie die gleiche Meinung haben!\grqq. Wie zuvor wird der Gegenspieler uns erst alle Missmatches liefern. Wie oben bereits festgestellt ist der Worst Case also, dass es genau einen oder keinen Match gibt. Dann kann der Gegenspieler uns zunächst $(\frac{n(n-1)}{2})-1$ Missmatches liefern, bevor das letzte Paar befragt wird, was entweder ein Match ist oder nicht. Demzufolge werden $\frac{n(n-1)}{2}$ Anfragen benötigt, der Algorithmus hat als eine Laufzeit von $\bO{n^2}$.
 
 $\hfill \square$
+
+\paragraph{Umsetzung als Algorithmus}
+
+Die Idee ist denkbar einfach. Wir iterieren spaltenweise über die Matrix und fragen für jeden Politiker in der jeweiligen Spalte, wenn er mit dem aktuell betrachteten Politker ein unbefragtes Paar ergibt (was über die Wahl der Zählvariablen sichergestellt werden kann), ob sie die gleiche Meinung zu Bildungspolitik haben ($A[i,j] = 1$). Sobald dies einmal eintritt, wird $true$ returnend, sonst $false$.
+
+\begin{algorithm}[!ht]
+	\LinesNumbered
+	\caption{repraesentationDerBildungspolitikdebatte}
+	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+	
+	\Input{Matrix $A$ der Größe $n^2$ für $n$ Politiker}
+	\Output{Gibt es zwei Politiker mit der gleichen Meinung zur Bildungspolitik}
+	\BlankLine
+	\For{i = 1 to n} {
+		\For{j = 2 + i to n} {
+			\If{A(i,j) == 1} {
+				return true\;		
+			}	
+		}
+	}
+	return false\;
+\end{algorithm}
+
+\paragraph{Korrektheit}
+
+Der Algorithmus ist korrekt, wenn er terminiert und für einen Eintrag $A(i,j) = 1$ true zrürckgibt. Dass er terminiert ist offensichtlich, da lediglich in den beiden for-Schleifen von 1 bis n iteriert wird. In Zeile 3 wird genau die zweite Korrektheisbedingung geprüft. Trifft sie ein, wird in Zeile 4 true zurückgegeben. Der Algorithmus ist also korrekt.
+
+\paragraph{Laufzeit}
+
+Die Laufzeit wird durch die beiden verschachtelten for-Schleifen gegeben, da alle anderen Aufrufe in konstanter Zeit erfolgen. Durch die Konstruktion der for-Schleifen werden geanu $\frac{n(n-1)}{2}$ Schritte ausgeführt, die Laufzeit des Algorithmus beträgt also $\bO{n^2}$.
+
 \end{document}

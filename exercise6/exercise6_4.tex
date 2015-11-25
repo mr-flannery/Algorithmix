@@ -11,7 +11,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[boxed]{algorithm2e}
+\usepackage[boxruled]{algorithm2e}
 \usepackage{parskip}
 \usepackage{listings}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
@@ -106,8 +106,54 @@
 
 \subsection*{Teilaufgabe a)}
 
+\paragraph{Zu beweisen:} $\forall v \in G(V): d_v \ \% \ 2 = 0 \Leftrightarrow G$ hat einen Eulerkreis
+
+$\Rightarrow$
+
+Voraussetzung ist, dass alle Knotengerade gerade und $\ge$ 2 sind. Wenn wir nun also einen Knoten über eine Kante betreten und über eine andere Verlassen, ergeben diese genau ein Kantenpaar. Mit solchen Kantenpaaren lassen sich nun Pfade konstruieren die in einem beliebigen Knoten $v_0$ starten. D.h. es exisitiert ein Eulerkreis. Wenn es einen Eulerkreis gibt, muss es auch einen längsten Eulerkreis $K$ geben. Betrachten wir nun den Graphen $G'$ bei dem alle Kanten aus $K$ entfernt worden sind. Auch für die Knoten in $G'$ gilt, dass alle Knotengrade gerade und $\ge$ 2 sind. Damit ließe sich in $G'$ ein Eulerkreis $K'$ finden. Würde man nun $K$ und $K'$ kombinieren, würde man einen Eulerkreis erhalten, der länger als $K$ wäre. Dies widerspräche der Definition von $K$ und erzeugt einen Widerspruch. $K$ ist also ein Eulerkreis.
+
+$\Leftarrow$
+
+Voraussetzung ist hier, dass $G$ einen Eulerkreis enthält. Das heißt, dass jedes mal wenn ein beliebiger Knoten $v$ besucht wird, gibt es eine eingehende und eine ausgehende Kante. Diese bilden genau ein Kantenpaar. Die beiden Kanten eines paars sind voneinander verschieden. Daraus folgt, dass der Knotengrad eines Knoten dem doppelten der Kantenpaare entspricht, die über $v$ führen. Für jeden Knoten $v$ muss der Knotengrad also zwingend gerade sein.
+
+Damit ist die Behauptung bewiesen.
+
+$\hfill \square$
+
 \subsection*{Teilaufgabe b)}
 
+\paragraph{Idee} Graph $G$ ist als Adjazenzliste gegeben. Wir iterieren über alle Knoten und fragen, ob sein Knotengrad gerade und größer als 2 ist. Sollte dies für einen Knoten nicht zutreffen, wird $false$ zurückgegeben, ansonsten $true$.
+
+\begin{algorithm}[ht!]
+	\LinesNumbered
+	\caption{eulerKreisTest}
+	\SetKwInOut{Input}{Eingabe} \SetKwInOut{Output}{Ausgabe}
+	\Input{Graph G als Adjazenzliste}
+	\Output{Enthält G einen Eulerkreis}
+	\BlankLine
+	
+	\For{v in G.Vertices} {
+		\If{!(v.degree >= 2) || !(v.degree \% 2 == 0)}{\
+			return false\;	
+		}
+	}
+	return true\;
+\end{algorithm}
+
+\paragraph{Korrektheit}
+
+Der Algorithmus muss terminieren und für Graphen, die Knoten mit ungeradem Knotengrad haben (also keinen Eulerkreis besitzen) false zurückgeben, sonst true. 
+
+Dass der Algorithmus terminiert ist leicht ersichtlich, da lediglich über alle Knoten iteriert wird. 
+
+Die zweite Bedingung der Korrektheit wird in Zeile 2 geprüft. Trifft sie zu, wird in Zeile 3 $false$ zurückgegeben. Der Algorithmus ist also korrekt.
+
+\paragraph{Laufzeit}
+
+Der Graph ist als Adjazenzliste gegeben. Das Iterieren über alle Knoten geschieht in $\bO{n}$. Innerhalb der for-Schleife wird für jeden Knoten zwei mal die Funktion \code{degree} aufgerufen. Angenommen die Funktion ist über das Auflisten und Zählen der Nachbarn implementiert. Dies kostet pro Knoten genau die Anzahl der indizenten Kanten. Da in einer Adjazenzliste jede Kante doppelt vorkommt und die Funktion zwei mal pro Knoten aufgerufen wird, ergibt sich daraus eine Gesamtlaufzei von $\bO{n+4m} = \bO{n+m}$.
+
 \subsection*{Teilaufgabe c)}
+
+Mit dem Algorithmus von Hierholzer lässt sich in einem ungerichteten, zusammenhängden Graphen, in dem jeder Knoten einen geraden Knotengrad hat, ein Eulerkreis in $\bO{m}$ finden.
 
 \end{document}

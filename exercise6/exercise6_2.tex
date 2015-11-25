@@ -104,4 +104,13 @@
 
 \section*{Aufgabe 2}
 
+Betrachten wir das Problem zunächst für einen konstanten Index $i$ und einen fortlaufenden Index $j$. Wir wollen also wissen, ob es einen Politiker gibt, der die gleiche Meinung zu Bildungspolitik hat wie $i$. Da wir einen Gegenspieler haben, haben alle Anfragen die Form \glqq Zeige mir für Politiker $i$ einen beliebigen anderen, noch nicht befragten Politiker $j$!\grqq. Nun kann man zwei Fälle unterscheiden. 
+
+Im ersten Fall gibt es keinen Politiker, der die gleiche Meinung wie Politiker $i$. In diesem Fall ist es vom Adversary-Standpunkt aus egal, welchen Politiker er uns zuerst zeigt, da wir für keinen einen Match bekommen. Wir müssen alle $n-1$ Politiker $j$ mit $j \not= i$ befragen, da wir ansonsten einen Match verpassen könnten.
+
+Im zweiten Fall gibt es mindestens einen Match. In diesem Fall wird der Gegenspieler uns erst alle Politiker liefern, die eine andere Meinung als $i$ haben, und uns erst dann einen Match zeigen, wenn es nur noch Matches gibt. Da der Algorithmus nur fragt, ob es mindestens einen Match gibt, besteht der Worst Case aus genau einem Match, da in diesem Fall der Gegenspieler maximal viele Missmatches liefern kann, bevor er einen Match gibt. Also werden auch in diesem Fall $n-1 = \bO{n}$ Anfragen gebraucht.\\
+
+Betrachten wir nun das gleiche Problem für alle Paare von Politikern. Alle Anfragen haben nun die Form \glqq Zeige mir für ein beliebiges, nicht befragtes Paar Politiker $i, j$, ob sie die gleiche Meinung haben!\grqq. Wie zuvor wird der Gegenspieler uns erst alle Missmatches liefern. Wie oben bereits festgestellt ist der Worst Case also, dass es genau einen oder keinen Match gibt. Dann kann der Gegenspieler uns zunächst $(\frac{n(n-1)}{2})-1$ Missmatches liefern, bevor das letzte Paar befragt wird, was entweder ein Match ist oder nicht. Demzufolge werden $\frac{n(n-1)}{2}$ Anfragen benötigt, der Algorithmus hat als eine Laufzeit von $\bO{n^2}$.
+
+$\hfill \square$
 \end{document}

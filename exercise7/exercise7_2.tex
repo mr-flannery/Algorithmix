@@ -95,7 +95,7 @@
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
-\title{Übung 6}
+\title{Übung 7}
 \date{} 
 \pagestyle{myheadings}
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
@@ -103,6 +103,16 @@
 \maketitle % erzeugt den Kopf
 
 \section*{Aufgabe 2}
+Um zu zeigen, dass CLIQUE NP vollständig ist, müssen wir VERTEX-COVER auf CLIQUE reduzieren, da wir bereits wissen, dass dieses Problem NP vollständig ist. Außerdem muss gezeigt werden, dass CLIQUE in NP liegt.
 
+CLIQUE liegt in NP genau dann, wenn wir einen Algorithmus finden, welcher in Polynomialzeit verifizieren kann, ob das Ergebnis korrekt ist. In einem ersten Schritt müssen wir überprüfen, ob die Clique die Mindestgröße, nach welcher gesucht ist, erfüllt. Der zweite Schritt testet, ob jeder Knoten mit allen anderen Knoten aus der Clique verbunden ist. Für den ersten Schritt brauchen wir $n$ Schritte, für den zweiten $n^2$ Schritte. Daraus ergibt sich eine Worst-Case Laufzeit von $\bO{n^2}$. Somit ist die Verifizierung in Polynomialzeit möglich.
+
+Nun wird gezeigt, dass sich VERTEX-COVER auf CLIQUE reduzieren lässt. Dafür bilden wir ausgehend von einem Graphen $G$ mit der Knotenmenge $V$ und der Kantenmenge $E$ einen komplementären Graphen $G'$, sodass gilt: wenn $a \in V$, $b \in V$ und $(a,b) \in E$ in $G$ dann $(a,b) \notin E$ in $G'$ und $(a,b) \notin E$ in $G$ dann $(a,b) \in E$ in $G'$. Ist also eine Kante zwischen zwei Knoten in $G$, so ist sie nicht in $G'$, ist die Kante nicht in $G$, so ist sie in $G'$. Um nun VERTEX-COVER mit $k$ für $G$ zu lösen, bilden wir den Graphen $G'$ und lösen in diesem CLIQUE $|V| - k$. VERTEX-COVER muss eine Menge von Knoten finden, sodass alle Kanten mit mindestens einem dieser Knoten verbunden sind. Ist in $G'$ eine Clique besteht aus der Knotenmenge $V''$ ($V'' = V - V'$), dann haben diese Knoten keine gemeinsamen Kanten in G. Dass heißt, für alle Kanten $(u,v)$ in $G$ ist entweder $u$ oder $v$ nicht in $V''$ und somit $V'$. $V'$ bildet genau die Menge an Knoten aus $G$, welche nötig sind, sodass VERTEX-COVER true zurückgibt.
+
+Zum Schluss muss die Reduktion von VERTEX-COVER auf CLIQUE in Polynomialzeit möglich sein. Da während der Überführung des Graphen in G in den Graphen G' nur die Frage stellen: Gibt es eine Kante zwischen den Knoten $u$ und $v$?, und diese Frage für jedes beliebiges Knotenpaar gestellt wird, ist die Reduktion in Polynomialzeit möglich.
+
+Wir haben somit gezeigt, dass CLIQUE in NP liegt und dass sich VERTEX-COVER mit Hilfe eines komplementären Graphen auf CLIQUE reduzieren lässt. Die Reduktion ist in Polynomialzeit möglich. Es ist bereits bekannt, dass VERTEX-COVER NP-vollständig ist, daraus folgt, dass CLIQUE ebenfalls NP-vollständig ist.
+
+$\hfill \square$ 
 
 \end{document}

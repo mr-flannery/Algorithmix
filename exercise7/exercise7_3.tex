@@ -104,5 +104,8 @@
 
 \section*{Aufgabe 3}
 
+Die Antwort auf diese Frage hängt davon ab, ob die Knotengrade der einzelnen Knoten bekannt sind oder nicht. Sollten diese bekannt sein und zum Beispiel als Array vorliegen, dann ließen sich auch die Knoten anhand ihres Knotengrads sortieren, z.B. mit einer modifizierten Version von Mergesort, die jedes mal, wenn sie zwei Werte im Array der Knotengrade tauscht auch die Werte im Array der Adjazenzliste mit den jeweiligen Indizes tauscht. Da Mergesort eine Laufzeit von $\bO{nlogn}$ und die zusätzlichen Tauschoperationen lediglich konstante Zeit benötigen, ist auch diese Sortierung in $\bO{nlogn}$ möglich.
+
+Für den Fall, dass die Knotengrade der einzelnen Knoten nicht bekannt sind, müssen diese zunächst ermittelt werden. Und für jede Datenstruktur, in der ein Graph vorliegen kann, kostet das Ermitteln der Knotengrade mindestens $\bO{m}$, da dafür jede Kante des Graphen mindestens einmal betrachtet werden muss. Demzufolge kostet die Sortierung eines Graphen anhand der Knotengrade inklusive Ermittlung dieser mindestens $\bO{nlogn + m}$.
 
 \end{document}

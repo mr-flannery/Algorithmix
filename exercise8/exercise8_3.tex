@@ -104,6 +104,26 @@
 
 \section*{Aufgabe 3}
 
+Wir wollen zeigen, dass {\scshape SetCover} NP-vollständig ist. Dazu muss zum einen gezeigt werden, dass {\scshape SetCover} in NP liegt und zum anderen, dass {\scshape SetCover} NP-schwer ist.\\
+
+Um zu zeigen, dass {\scshape SetCover} in NP liegt konstruieren wir einen Polynomialzeitalgorithmus, der für eine Menge $U$, ein Cover $C$ und eine natürliche Zahl $k$ prüft, ob $C$ ein Cover von $U$ ist.
+
+Wir gehen davon aus, dass $U$ als Array und $C$ als Array von Arrays vorliegt. Zunächst prüfen wir, ob $|C| \le k$ gilt. Ist dies nicht der Fall, ist die Lösung ungültig. Falls dies gilt, muss anschließend geprüft werden, ob $C$ tatsächlich ein Cover von $U$ ist. Dazu iterieren wir über alle Arrays von $C$ und überschreiben jedes Element, dass wir in einem dieser Arrays finden, im Array $U$ mit \code{null}. Am Ende können wir über $U$ iterieren und prüfen, ob es Elemente ungleich \code{null} gibt. Falls ja, ist $C$ kein Cover von $U$. Andernfalls ist $C$ ein Cover von $U$ und die Lösung ist gültig.
+
+Die Laufzeit des Algorithmus setzt sich wie folgt zusammen: Um $|C|$ zu ermitteln müssen wir einmal über das äußere Array von $C$ iterieren, was offensichtlich $\bO{|C|}$ kostet. Wenn der Rest ausgeführt muss $|C| \le k$ gelten. Außerdem wissen wir durch die Definition der Teilmenge, dass jedes Array in $C$ maximal $|U|$ Elemente enthalten kann. Also kostet das Iterieren über alle Elemente aus $C$ im worst case $\bO{k*|U|}$. Am Ende muss über $U$ iteriert werden, was offensichtlich $\bO{|U|}$ kostet. Die Gesamtlaufzeit beträgt also $\bO{|C| + k*|U| + |U|}$ und ist somit polynomiell.\\
+
+Nun muss noch gezeigt werden, dass {\scshape SetCover} NP-schwer ist. Dazu zeigen wir, dass sich {\sc VertexCover} in polynomieller Zeit auf {\sc SetCover} reduzieren lässt. Dazu konstruieren wir zu einer gegebenen Instanz von {\sc VertexCover} in polynomieller Zeit eine Instanz von {\sc SetCover}.
+
+Gegeben sei eine Instanz von {\sc VertexCover} mit einem Graphen $G=(V,E)$ und einer natürlichen Zahl $j$. Gesucht ist eine Instanz von {\sc SetCover} mit einem Universum $U$, einem Cover $C$ und einer natürlichen Zahl $k$. Für die Reduktion gelte $U = E$ und $k = j$. Weiterhin konstruieren wir $C$ so, dass wir jeden Knoten $v$ aus $G$ mit einem Label von 1 bis $n$ markieren, und für jeden Knoten $v_i$ eine Menge $S_i$ konstruieren, die genau aus den zu $v_i$ inzidenten Kanten besteht. Diese Mengen $S_i$ bilden dann genau $C$. Mit einer Adjazenzliste ist diese Konstruktion in $\bO{n+m} = \bO{n+m}$ möglich, da wir genau einmal über alle Knoten iterieren und dabei für jeden Knoten alle inzidenten Kanten (also im Prinzip alle Nachbarn) abfragen.
+
+Nun muss lediglich gezeigt werden, dass genau dann wenn eine {\sc VertexCover}-Instanz gültig ist, auch die daraus konstruierbare {\sc SetCover}-Instanz gültig ist.
+
+Gehen wir davon aus, dass eine gültige {\sc VertexCover}-Instanz existiert. D.h. es gibt genau $k$ Knoten, die alle Kanten des Graphen abdecken. Konstruiert man nun wie oben für jeden Knoten $v_i$ die dazugehörige Menge $S_i$, müssen diese Mengen offensichtlich ein Cover für das Universum $E$ sein. Für eine gültige {\sc VertexCover}-Instanz existiert also auch eine gültige {\sc SetCover}-Instanz.
+
+Nun gehen wir davon aus, dass eine gültige {\sc SetCover}-Instanz existiert. Es existiert also $k$ Mengen $S_i$, die ein Cover für das Universum bilden. Dieses Universum sei nun die Kantenmenge eines Graphen. Nun lässt sich dieser Graph konstruieren, so dass für jede Menge $S_i$ ein Knoten $v_i$ existiert für den die Elemente aus $S_i$ die inzidenten Kanten zu $v_i$ darstellen. Offensichtlich bilden diese $k$ Knoten $v_i$ ein {\sc SetCover} des Graphen. Für eine gültige {\sc VertexCover}-Instanz existiert also auch eine gültige {\sc VertexCover}-Instanz.
+
+Wir haben gezeigt, dass {\scshape SetCover} in NP liegt und dass {\scshape SetCover} NP-schwer ist. Somit ist {\scshape SetCover} auch NP-vollständig.
+
 $\hfill \square$ 
 
 \end{document}

@@ -103,6 +103,52 @@
 \maketitle % erzeugt den Kopf
 
 \section*{Aufgabe 2}
+Wir wollen zeigen, dass {\scshape DirectedHamiltonCycle} und {\scshape HamiltonCycle} NP-voll-ständig sind.
+Es muss gezeigt werden, dass beide in NP liegen und NP schwer sind. In NP liegen beide, wenn sich die Ergebnisse in Polynomialzeit verifizieren lassen. Die NP Schwere wird gezeigt, indem ein bereits bekanntes NP-vollständiges Problem auf eines der neuen reduziert wird und gezeigt werden kann, dass die Reduktion ebenfalls in Polynomialzeit möglich ist.
+
+\paragraph{zu zeigen:} {\scshape DirectedHamiltonCycle} ist NP-vollständig
+\vspace{0.2cm}
+
+(1) {\scshape DirectedHamiltonCycle} in NP
+\vspace{0.2cm}
+
+(2) {\scshape 3-Sat} in Polynomialzeit reduzierbar auf {\scshape DirectedHamiltonCycle}
+\vspace{0.4cm}
+
+zu (1): 
+
+Ein Ergebnis für {\scshape DirectedHamiltonCycle} lässt sich verifizieren, indem man überprüft ob jeder Knoten nur einmal im Ergebnis vorkommt und dass es für jeden Knoten in der Liste, eine Kante von ihm zu seinem Nachfolger gibt. Wird ein Knoten ein zweites Mal besucht, muss es der Startknoten sein, oder das Ergebnis ist falsch. Diese Überprüfung ist in Polynomialzeit möglich, deswegen muss {\scshape DirectedHamiltonCycle} in NP liegen.
+\vspace{0.2cm}
+
+zu (2):  
+
+Wir reduzieren {\scshape 3-Sat} mit $m$ Variablen und $l$ logischen Operationen auf {\scshape DirectedHamiltonCycle}. Für logische Operation führen wir einen Knoten ein. Für jede Variable eine Reihe von Knoten. Diese Reihe besteht aus Paaren von Knoten, ein Paar für jede logische Operation. Zwischen jedes Paar wird ein weiterer Knoten eingefügt, welche die Paare voneinander trennt. An beiden Enden dieser Reihe fügen wir zwei Knoten ein, einen als Anfangsknoten bzw. Endknoten der Reihe und einen um das letzte bzw. erste Paar von diesem Knoten zu trennen. Damit haben wir in einer Reihe maximal $3l + l$ Knoten.
+
+
+
+$\hfill \square$ 
+
+\paragraph{zu zeigen:} {\scshape HamiltonCycle} ist NP-vollständig
+
+\vspace{0.2cm}
+(1) {\scshape HamiltonCycle} in NP
+\vspace{0.2cm}
+
+(2) {\scshape DirectedHamiltonCycle} in Polynomialzeit reduzierbar auf {\scshape HamiltonCycle}
+\vspace{0.4cm}
+
+zu (1): 
+
+Die Verifikation verläuft ähnlich der {\scshape DirectedHamiltonCycle} Verifikation. Jetzt müssen wir uns merken, welche Kanten wir bereits besucht haben, damit wir keine Kante doppelt benutzen und somit zu einem bereits besuchten Knoten zurückkehren. Auf diese Weise lässt sich auch {\scshape HamiltonCycle} in Polynomialzeit verifizieren.
+\vspace{0.2cm}
+
+zu (2): 
+
+Da wir bereits gezeigt haben, dass {\scshape DirectedHamiltonCycle} NP-vollständig ist, müssen wir jetzt zeigen dass sich {\scshape DirectedHamiltonCycle} in Polynomialzeit auf {\scshape HamiltonCycle} reduzieren lässt. Für jeden Knoten K im Graph G führen wir im Graph G' 3 Knoten (K1, K2, K3) ein. K1 bekommt eine Kante für jede eingehende Kante in G. K1 und K2 sind genau über eine Kante verbunden, das gleiche gilt für K2 und K3. K3 bekommt eine Kante für jede ausgehende Kante von K in G. Auf diese Weise wird sichergestellt, dass die Richtungen aus dem gerichteten Graphen in den ungerichteten übernommen werden. Geht der Algorithmus über eine eingehende Kante in ein Tripel (K1, K2, K3) und verlässt diese ebenfalls über eine eingehende Kante, ist K2 für diese Tripel nicht mehr erreichbar und somit tot. Über diese Einbahnstraßen von K1 nach K3 über K2 erreichen wir reduzieren wir {\scshape DirectedHamiltonCycle} auf {\scshape HamiltonCycle}. Bei der Erstellung des Graphen G' führen wir für jeden Knoten zusätzliche 2 Knoten und Kanten, da diese Operation in Polynomialzeit möglich ist, haben wir {\scshape DirectedHamiltonCycle} in Polynomialzeit auf {\scshape HamiltonCycle} reduziert und somit gezeigt, dass {\scshape HamiltonCycle} NP schwer ist.
+
+\vspace{0.2cm}
+
+Wir haben für {\scshape HamiltonCycle}, dass es in NP liegt und NP schwer ist. Daraus folgt, dass {\scshape DirectedHamiltonCycle} NP-vollständig ist.
 
 $\hfill \square$ 
 

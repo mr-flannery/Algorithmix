@@ -103,7 +103,7 @@
 \maketitle % erzeugt den Kopf
 
 \section*{Aufgabe 2}
-Um zu zeigen, dass CLIQUE NP vollständig ist, müssen wir VERTEX-COVER auf CLIQUE reduzieren, da wir bereits wissen, dass dieses Problem NP vollständig ist. Außerdem muss gezeigt werden, dass CLIQUE in NP liegt.
+Um zu zeigen, dass CLIQUE NP vollständig ist, müssen wir VERTEX-COVER auf CLIQUE reduzieren, da wir bereits wissen, dass dieses Problem NP-vollständig ist. Außerdem muss gezeigt werden, dass CLIQUE in NP liegt.
 
 CLIQUE liegt in NP genau dann, wenn wir einen Algorithmus finden, welcher in Polynomialzeit verifizieren kann, ob das Ergebnis korrekt ist. In einem ersten Schritt müssen wir überprüfen, ob die Clique die Mindestgröße, nach welcher gesucht ist, erfüllt. Der zweite Schritt testet, ob jeder Knoten mit allen anderen Knoten aus der Clique verbunden ist. Für den ersten Schritt brauchen wir $n$ Schritte, für den zweiten $n^2$ Schritte. Daraus ergibt sich eine Worst-Case Laufzeit von $\bO{n^2}$. Somit ist die Verifizierung in Polynomialzeit möglich.
 

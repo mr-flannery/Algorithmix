@@ -122,9 +122,11 @@ Ein Ergebnis für {\scshape DirectedHamiltonCycle} lässt sich verifizieren, ind
 
 zu (2):  
 
-Wir reduzieren {\scshape 3-Sat} mit $m$ Variablen und $l$ logischen Operationen auf {\scshape DirectedHamiltonCycle}. Für logische Operation führen wir einen Knoten ein. Für jede Variable eine Reihe von Knoten. Diese Reihe besteht aus Paaren von Knoten, ein Paar für jede logische Operation. Zwischen jedes Paar wird ein weiterer Knoten eingefügt, welche die Paare voneinander trennt. An beiden Enden dieser Reihe fügen wir zwei Knoten ein, einen als Anfangsknoten bzw. Endknoten der Reihe und einen um das letzte bzw. erste Paar von diesem Knoten zu trennen. Damit haben wir in einer Reihe maximal $3l + l$ Knoten.
+Wir reduzieren {\scshape 3-Sat} mit $m$ Variablen und $l$ logischen Operationen auf {\scshape DirectedHamiltonCycle}. Für logische Operation führen wir einen Knoten ein. Für jede Variable eine Reihe von Knoten. Diese Reihe besteht aus Paaren von Knoten, ein Paar für jede logische Operation. Zwischen den Knoten eines Paares gibt es eine Kante vom ersten zum zweiten Knoten für nicht negierte Variablen und eine vom zweiten zum ersten für negierte Variablen. Zwischen die Paare wird ein weiterer Knoten eingefügt, welche die Paare voneinander trennt. An beiden Enden dieser Reihe fügen wir zwei Knoten ein, einen als Anfangsknoten bzw. Endknoten der Reihe und einen um das letzte bzw. erste Paar von diesem Knoten zu trennen. Damit haben wir in einer Reihe maximal $3l + 3$ Knoten. Insgesamt gibt es also $3m*l + 3m + l$ Knoten. Die Reduktion ist somit in Polynomialzeit möglich und {\scshape DirectedHamiltonCycle} somit NP schwer.
 
+\vspace{0.2cm}
 
+Wir haben für {\scshape DirectedHamiltonCycle}, dass es in NP liegt und NP schwer ist. Daraus folgt, dass {\scshape DirectedHamiltonCycle} NP-vollständig ist.
 
 $\hfill \square$ 
 
@@ -148,7 +150,7 @@ Da wir bereits gezeigt haben, dass {\scshape DirectedHamiltonCycle} NP-vollstän
 
 \vspace{0.2cm}
 
-Wir haben für {\scshape HamiltonCycle}, dass es in NP liegt und NP schwer ist. Daraus folgt, dass {\scshape DirectedHamiltonCycle} NP-vollständig ist.
+Wir haben für {\scshape HamiltonCycle}, dass es in NP liegt und NP schwer ist. Daraus folgt, dass {\scshape HamiltonCycle} NP-vollständig ist.
 
 $\hfill \square$ 
 

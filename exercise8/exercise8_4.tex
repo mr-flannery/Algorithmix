@@ -106,7 +106,7 @@
 
 \subsection*{Teilaufgabe a)}
 
-
+Im worst case finden wir keinen Knoten mit Grad $> k$. In diesem Fall bleiben $n$ Knoten übrig. Wenn nun jeder Knoten einen Grad von $k$ hat, bleiben $\frac{n*k}{2}$ Kanten übrig (da eine Kante genau 2 Knoten verbinden).
 
 \subsection*{Teilaufgabe b)}
 
@@ -147,7 +147,7 @@ Anhand der erläuterten Heurisitk (für eine gesuchtes {\sc VertexCover} der Gr�
 	\If{node != null} {\
 		return \_vertexCover((G - node), k, (curK - 1), (removedNodesCount + 1)) | \_vertexCover((G - node.neighbours), k, (curK - 1), (removedNodesCount + node.neighbours.size))\;
 	} \Else {
-		return \_vertexCover(G, k, (curK -1), removedNodesCount)\;
+		return \_vertexCover(G, k, (curK - 1), removedNodesCount)\;
 	}
 	
 	
@@ -155,12 +155,16 @@ Anhand der erläuterten Heurisitk (für eine gesuchtes {\sc VertexCover} der Gr�
 
 \paragraph{Korrektheit}
 
-Beweis per Induktion. Thanks Obama!
+Die Korrektheit des Algorithmus kann per Induktion bewiesen werden. 
+
+Induktionsvoraussetzung ist in diesem Fall ein Graph mit leerer Kantenmenge. In diesem Fall gibt der Algorithmus \code{true} zurück, was korrekt ist.
+
+Für den Induktionsschritt muss gezeigt werden, dass wenn der Algorithmus eine korrekte Antwort für $k$ liefert, dass er dann auch eine korrekte Antwort für $k+1$ liefert. Nehmen wir also an, dass das Ergebnis für $k$ korrekt ist. Dann gibt es für $k+1$ zwei Fälle. Im ersten Fall gibt es einen Knoten dessen Knotengrad größer als $k+1$ ist. Nach der Heurisitk muss also dieser oder alle seine Nachbarn teil des Covers sein. Da beide gefunden werden, wird auch ein korrektes Ergebnis geliefert. Im zweiten Fall gibt es keinen Knoten, dessen Grad größer als $k+1$ ist. Dann kann das Ergebnis entweder schon korrekt sein, oder nicht. Aber in jedem Fall wird es gefunden.
+
+Damit ist die Korrektheit des Algorithmus gezeigt.
 
 \paragraph{Laufzeit}
 
-Ist hoffentlich in der geforderten Laufzeit. Nur warum?
-
-$\hfill \square$ 
+Grundsätzlich werden $k+1$ Fälle geprüft und im worst case gibt es zwei Rekursionsaufrufe pro Prüfung. Demzufolge wird ein Rekursionsbaum in $\bO{2^(k+1)}$ aufgebaut. Pro Rekursionsaufruf wird lediglich eine Operation ausgeführt, die nicht konstante Laufzeit benötigt, und das ist \code{maxNode(n)}. Aus der letzten Übung wissen wir, dass die Sortierung von Knoten nach ihrem Grad in $\bO{n}$ realisiert werden kann. Nun kann man argumentieren, dass es für jede Anzahl an Knoten $n$ einen Summanden $x$ gibt, so dass $2^kn \le 2^{k+x}$ und somit $2^kn \le 2^{\bO{k}}$ gilt. Somit hat der Algorithmus eine Gesamtlaufzeit von $\bO{2^{\bO{k}}}$, $\bO{2^{\bO{k}} + nk}$ stellt also eine gültige obere Schranke für den Algorithmus dar.
 
 \end{document}

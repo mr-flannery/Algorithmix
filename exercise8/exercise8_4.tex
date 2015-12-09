@@ -104,6 +104,63 @@
 
 \section*{Aufgabe 4}
 
+\subsection*{Teilaufgabe a)}
+
+
+
+\subsection*{Teilaufgabe b)}
+
+Anhand der erläuterten Heurisitk (für eine gesuchtes {\sc VertexCover} der Größe $k$ muss entweder ein Knoten mit Grad $> k$ Teil des Covers sein oder alle seine Nachbarn) lässt sich ein \textit{bounded search tree algorithm} entwickeln, der entscheidet, ob ein gegebener Graph $G$ für ein gegebenes $k$ ein {\sc VertexCover} der Größe $k$ enthält.
+
+\paragraph{Idee} Dieser Algorithmus arbeitet rekursiv. Zuerst werden die Knoten anhand ihres Grades sortiert. Nun nehmen wir den ersten Knoten mit Grad $> k$ (dieser Knoten sei im folgenden $v$ genannt) und tätigen zwei Aufrufe: zum einen wird \code{_vertexCover} auf $G\setminus v$ aufgerufen, zum anderen auf $G\setminus v.neighbors$ (jeweils mit k-1). Nun müssen folgende Fälle betrachtet werden: ist die Kantenmenge des Graphen leer, wird \code{true} zurückgegeben. Ist die Menge der Knoten im aktuellen Cover größer als $k$, wird \code{false} zurückgegeben. Ansonsten wird die Rückgabe der beiden Rekursionsaufrufe verodert und zurückgegeben.\\
+
+\textbf{Anmerkung:} um den Pseudocode übersichtlich zu halten, wird auf eine gesonderte Angabe von Pseudocode für die Sortierung der Knoten verzichtet. Die Funktion \code{maxNode(n)} übernimmt die Sortierung der Knoten und gibt den ersten Knoten mit Grad $> k$ zurück. Sollte solch ein Knoten nicht vorhanden sein, wird \code{null} zurückgegeben.
+
+\begin{algorithm}[ht]
+		\LinesNumbered
+		\caption{vertexCover(G, k)}
+		\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+		
+		\Input{Graph G als Adjazenzliste, natürliche Zahl k}
+		\Output{Wahrheitswert, G ein VertexCover der Größe k enthält}
+		
+		return \_vertexCover(G, k, k, 0)\;
+\end{algorithm}
+
+\begin{algorithm}[ht]
+	\LinesNumbered
+	\caption{\_vertexCover(G, k, curK, removedNodesCount)}
+	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+	
+	\Input{Graph G als Adjazenzliste, natürliche Zahl k, natürliche Zahl curK natürliche Zahl removedNodesCount}
+	\Output{Wahrheitswert, G ein VertexCover der Größe k enthält}
+	
+	\If{G.edges.empty()} {\
+		return true\;	
+	}
+	\If{removedNodesCount > k} {\
+		return false\;
+	}
+	
+	node = maxNode(curK)\;
+	
+	\If{node != null} {\
+		return \_vertexCover((G - node), k, (curK - 1), (removedNodesCount + 1)) | \_vertexCover((G - node.neighbours), k, (curK - 1), (removedNodesCount + node.neighbours.size))\;
+	} \Else {
+		return \_vertexCover(G, k, (curK -1), removedNodesCount)\;
+	}
+	
+	
+\end{algorithm}
+
+\paragraph{Korrektheit}
+
+Beweis per Induktion. Thanks Obama!
+
+\paragraph{Laufzeit}
+
+Ist hoffentlich in der geforderten Laufzeit. Nur warum?
+
 $\hfill \square$ 
 
 \end{document}

@@ -118,6 +118,10 @@ Angenommen wir haben eine gültige {\sc BinPacking}-Instanz. Dann wissen wir, da
 
 Damit ist gezeigt, dass {\sc BinPacking} NP-vollständig ist.
 
-$\hfill \square$ 
+$\hfill \square$
+
+{\sc BinPacking} für k = 12 lässt sich ebenfalls mit dem oben genannten Algorithmus in Polynomialzeit verifizieren.
+
+Damit {\sc BinPacking} mit k = 12 nicht NP-vollständig ist, darf es also nicht NP-schwer sein. Wir haben bereits gezeigt, dass sich die Bildung von zwei Partitionen auf {\sc BinPacking} mit k = 2 reduzieren lässt. Analog kann man einen Beweis führen, dass sich das Bilden von 12 Partitionen auf {\sc BinPacking} mit k = 12 reduzieren lässt. Angenommen {\sc Partition} lässt sich für ein beliebiges k (k entspricht der Anzahl der Partitionen) lösen, so müsste dementsprechend das herkömmliche {\sc Partition} ebenfalls nicht NP-vollständig sein. Wir führen damit die ursprüngliche Aussage zu einem Widerspruch, also muss auch {\sc BinPacking} mit k = 12 NP-vollständig sein.
 
 \end{document}

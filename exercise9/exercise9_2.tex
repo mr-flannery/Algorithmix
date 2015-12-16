@@ -95,7 +95,7 @@
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
-\title{Übung 8}
+\title{Übung 9}
 \date{} 
 \pagestyle{myheadings}
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
@@ -104,7 +104,19 @@
 
 \section*{Aufgabe 2}
 
+Um zu zeigen, dass {\sc BinPacking} NP-Vollständig ist, müssen wir zeigen, dass es in NP liegt und dass es NP-schwer ist.\\
 
+Angenommen {\sc BinPacking} liegt in NP. Dann gibt es einen Algorithmus, der eine Ergebnis von {\sc BinPacking} in polynomieller Zeit verifizieren kann. Für eine {\sc BinPacking}-Lösung mit einem beliebigen $k$ muss zuerst geprüft werden, ob die Anzahl der Bins gleich $k$ ist. Falls ja kann anschließend über die Bins iteriert werden. Für jeden Bin wird geprüft, ob das Gewicht kleiner gleich der maximalen Füllmenge ist (typischerweise 1). Außerdem werden alle Elemente des Bins aus der ursprünglichen Liste der Elemente entfernt werden. Wenn kein Bin überläuft und die ursprüngliche Liste der Elemente am Ende leer ist, ist die {\sc BinPacking}-Lösung korrekt. Für eine $n$ Elemente und $k$ Bins lässt sich dies in $\bO{n+k}$ berechnen. Dies ist offensichtlich polynomiell, somit ist liegt {\sc BinPacking} in NP.\\
+
+Wir zeigen, dass {\sc BinPacking} NP-schwer ist durch {\sc Partition} $\le_P$ {\sc BinPacking}. Gegeben sei also eine Instanz von {\sc Partition} mit einer Menge $C$. Gesucht ist eine {\sc BinPacking} Instanz mit einer Menge $S$ und $k=2$. Wir konstruieren $S$ indem wir jedes $s_i \in S$ folgendermaßen berechnen: $s_i = \frac{2c_i}{|C|}$. Die Komplexität dieser Reduktion ist linear zur Anzahl der Elemente in $C$, also polynomiell. 
+
+Nun muss gezeigt werden, dass genau dann, wenn eine {\sc Partition}-Instanz gültig ist, auch die daraus konstruierbare {\sc BinPacking}-Instanz gültig ist.
+
+Angenommen wir haben eine gültige {\sc Partition}-Instanz. Dann wissen wir, dass sich die Menge $C$ in zwei gleichschwere disjunkte Teilmengen aufteilen lässt. Die konstruierte Menge $S$ hat nach der Konstruktionsregel ein Gewicht von 2. Also muss sich $S$ in zwei disjunkte Teilmengen mit Gewicht 1 aufteilen lassen. Somit ist die {\sc BinPacking}-Instanz gültig.
+
+Angenommen wir haben eine gültige {\sc BinPacking}-Instanz. Dann wissen wir, dass sich die Menge $S$ in zwei gleichschwere disjunkte Teilmengen mit Gewicht 1 aufteilen lässt. Durch Umkehrung der Konstruktionsregel erhalten wir nun eine Menge $C$ von der wir ebenfalls wissen, dass sie sich in zwei gleichschwere, disjunkte Teilmengen aufteilen lässt. Somit ist die {\sc Partition}-Instanz gültig.\\
+
+Damit ist gezeigt, dass {\sc BinPacking} NP-vollständig ist.
 
 $\hfill \square$ 
 

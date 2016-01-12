@@ -104,4 +104,24 @@
 
 \section*{Aufgabe 2}
 
+\subsection*{Teilaufgabe a)}
+
+\paragraph{Eingabe:} Graph G(V,E)
+
+\paragraph{Ausgabe:} $e \in E$
+
+\paragraph{Korrektheit:} $e \ge 20km \wedge \forall e' \in E: e' \ge e$
+
+\paragraph{Interpretation:} G ist das Streckennetz, wobei V die Menge aller Städte und E die Menge aller Strecken ist. $e$ ist die kürzeste Strecke länger als 20km. $e'$ sind alle Strecken größer als $e$.
+
+\subsection*{Teilaufgabe b)}
+
+\paragraph{Eingabe:} Graph G(V,E)
+ 
+\paragraph{Ausgabe:} Graph G'(V', E')
+ 
+\paragraph{Korrektheit:} $\forall e \in E': e < 50km \wedge V'' \in G': |V''| \ge |V'|$
+ 
+\paragraph{Interpretation:} G ist das Streckennetz, wobei V die Menge aller Städte und E die Menge aller Strecken ist. G' ist das errechnete Streckennetz, wobei V' die Menge an Knoten mit minimal wenigen eingefügten Zwischenstationen und E' die Menge aller Kanten des errechneten Streckennetzes ist, wobei alle Kanten kürzer als 50km sind.
+
 \end{document}

@@ -104,5 +104,74 @@
 
 \section*{Aufgabe 4}
 
+\subsubsection*{Idee}
+Angenommen wir haben $n$ Zutaten, mit beliebigen $A$ und $B$ werten. Wir konstruieren im ersten Schritt einen zweidimensionalen Array $A[n+1, n+1]$.
+In der ersten Zeile stehen die $A$ Werte aufsteigend sortiert, in der ersten Spalte die $B$ Werte aufsteigend sortiert (jeweils als Array mit genau einem Element). Die Zelle $[0,0]$ bleibt leer 
+(bzw. repräsentiert sie den Topf kochendes Wasser). 
+Für jede Zeile muss nun für jede Spalte $1..n$ geprüft werden ob sich die Zutat an der Stelle $i$ mit denen in der Zelle $i-1$ kombinieren lässt (Prüfung ob der B-Wert geringer ist als alle bisherigen). Am Ende stehen in der letzten Spalte mögliche Kombinationen von Zutaten anhand ihrer A- bzw. B-Werte. Für jede der Zellen wird nun der KV-Wert berechnet. Die Zelle
+mit dem höchsten KV-Wert in der letzten Spalte, repräsentiert die Kombination von Zutaten, welche den höchst möglichen KV-Wert erzeugt.
+
+\subsubsection*{Algorithmus}
+
+\begin{algorithm}[H]
+	\LinesNumbered
+	\caption{maxKv(A, dKV, n)}
+	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+	
+	\Input{Array A[n+1,n+1], Dictionary dKV der Zutaten und ihrer KV-Werte,\\ n Anzahl der Zutaten}
+	\Output{Maximaler KV-Wert}
+	
+	\BlankLine
+	\BlankLine
+	
+	\For {i = 1, i <= n; ++i} {
+		\For {j = 1, j <= n; ++j} {
+			A[i][j] = A[i][j-1];
+			
+			\If {mixable(A[i][j], A[0][j])} {
+				A[i][j].add(A[0][j])\;
+			}
+		}
+	}
+	
+	\BlankLine
+	\BlankLine
+	
+	maxKV = 0;
+	
+	\For {i = 1; i <= n ; ++i} {
+		tmpMaxKV = 0\;
+		\ForEach {ingredient in ingredients} {
+			tmpMaxKV += dKV[ingredient]\;
+		}
+		
+		\If {tmpMaxKV > maxKV} {
+			maxKV = tmpMaxKV\;
+		}
+	}
+	
+	\BlankLine
+	\BlankLine
+	
+	return maxKV\;
+\end{algorithm}
+
+\subsubsection*{Korrektheit}
+Durch die Sortierung der Zutaten nach ihren A-Werten wird sichergestellt, dass keine Zutat mit einem kleineren A-Wert nicht mehr in Betracht gezogen wird,
+weil eine bereits verwendet Zutat einen höheren Wert hatte. Die Zeilen stellen sicher, dass jede Zutat einmal als erste Zutat in Betracht gezogen wird, um somit sicherzustellen, dass sie aussortiert wird Aufgrund einer ungünstigen Kombination der A- und B-Werte.
+
+Unter den in der letzten Spalte vorliegenden Arrays, muss nun einer oder mehrere den maximalen KV-Wert erreichen.
+
+\newpage
+
+\subsubsection*{Laufzeit}
+Die beiden Schleifen zum berechnen der jeweiligen $tmpMaxKV$ Werte, iterieren im worst-case $n$ mal über $n$ Zutaten und haben somit eine Laufzeit von $n^2$.
+
+Die getroffene Annahme der Vorsortierung der Zutaten spielt somit schon keine entscheidende Rolle mehr für die worst-case Laufzeit, da sie maximal $2 * n * \log(n)$ Laufzeit hat, wenn man sowohl die A- als auch die B-Werte mit Mergesort sortiert.
+
+Die ersten Schleifen besitzen insgesamt eine Laufzeit von $n^4$ im worst-case, weil $n$ mal über $n$ Zutaten iteriert wird, für welche $n$ mal getestet werden muss ob der B-Wert größer ist. Sollte dies zutreffen müssen $n$ Elemente in einen Array eingefügt werden.
+Der Test, ob der B-Wert größer ist als alle bisherigen, wird mit Hilfe der Funktion \code{mixable} durchgeführt. Sie iteriert einmal über den Array aus Zutaten der vorherigen Zelle und überprüft, ob die neue Zutat in den Array passt. 
+
+Somit ergibt sich eine Gesamtlaufzeit von $n^4 + n^2 + 2 * n * log(n)$, also $\bO{n^4}$.
 
 \end{document}

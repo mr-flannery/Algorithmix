@@ -104,4 +104,31 @@
 
 \section*{Aufgabe 3}
 
+\paragraph{Idee} Die Idee des Algorithmus ist es für alle Männer für alle der zugeordenten Frau gegenüber präferierten Frauen zu überprüfen, ob diese den aktuellen Mann zu dem ihr zugeordneten Mann präferiert. Dann handelt es sich um eine instabile Zuordnung und es wird \code{false} zurückgegeben, anderenfalls \code{true}. Als Eingabe liegen die Liste der Männer sowie die Lister der Frauen vor. Sowohl Männer als auch Frauen haben jeweils ihre Präferenzliste sowie den Index des zugewiesenen Partners in der Präferenzliste als Attribut.
+
+\begin{algorithm}[ht!]
+	\caption{StableMatchingValidation}
+	\SetKwInOut{Input}{Eingabe}
+	\SetKwInOut{Output}{Ausgabe}
+	
+	\Input{Liste von Männern, Liste von Frauen}
+	\Output{Boolscher Wert}
+	
+	\For{m in men} {
+		\For{i = 1 to (m.match-1)} {
+			w = m.preferences[i]\;
+			\For{j = 1 to (w.match)}{
+				\If{w.preferences[j] == m} {\
+					return false\;	
+				}	
+			}
+		}
+	}
+	return true\;	
+\end{algorithm}
+
+\paragraph{Korrektheit} Ein Paar ist genau dann instabil, wenn der Mann eine andere Frau findet, die ihn zu ihrem Mann präferiert (analog für Frauen). Demzufolge müssen für einen Mann alle Frauen überprüft werden, die er zu seinem Partner präferiert. Genau über diese Frauen wird in der zweiten for-Schleife iteriert. Sobald der Algorithmus in der Präferenzliste des Mannes auf die Frau trifft, die sein Partner ist, wird die aktuelle Iteration abgebrochen, da alle anderen Frauen für ihn nicht interessant sind. Nun wird für genau diese interessanten Frauen, über die iteriert wird, überprüft, ob sie den Mann zu ihrem Partner präferieren. Das heißt es werden für einen Mann alle Frauen geprüft, die ein instabiles Paar ergeben. Da dies für alle Männer geschieht muss ein instabiles Paar zwangsläufig gefunden werden, falls es existiert.
+
+\paragraph{Laufzeit}In der äußersten for-Schleife wird über die Liste der Männer iteriert. Bei $n$ Männern kostet dies $\bO{n}$. In der mittleren for-Schleife wird über alle Frauen eines Mannes iteriert, die er gegenüber seinem Partner präferiert. Im worst case ist sein Partner die letzte Frau auf seiner Liste, also würde über $n-1$ Frauen iteriert werden, was $\bO{n}$ kostet. In der innersten for-Schleife wird über alle von der Frau gegenüber ihrem Partner präferierten Manner iteriert. Analog zur vorherigen Argumentation kostet dies $\bO{n}$. Alle anderen Schritte kosten konstante Zeit. Daraus ergibt sich eine Gesamtlaufzeit von $\bO{n^3}$.
+
 \end{document}

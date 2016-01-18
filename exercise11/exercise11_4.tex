@@ -1,0 +1,107 @@
+\documentclass[12pt]{scrartcl}%{article} % Beginn der LaTeX-Datei
+
+%% twocolumn
+
+\usepackage{amsmath,amssymb}  % erleichtert Mathe 
+\usepackage{enumerate}% schicke Nummerierung
+
+\usepackage{graphicx} % für Grafik-Einbindung
+%\usepackage{hyperref}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[boxruled]{algorithm2e}
+\usepackage{parskip}
+ % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
+\usepackage[utf8]{inputenc}  % für Unix-Systeme
+  % ermöglicht die direkte Eingabe von Umlauten und ß
+  % evt. obige Zeile ersetzen durch
+  % \usepackage[ansinew]{inputenc}  % für Windows
+  % \usepackage[applemac]{inputenc} % für den Mac
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ntheorem
+%
+\usepackage[thmmarks,amsmath,hyperref,noconfig]{ntheorem} 
+  % erlaubt es, Sätze, Definitionen etc. einfach durchzunummerieren.
+\newtheorem{satz}{Satz}[section] % Nummerierung nach Abschnitten
+\newtheorem{hilfssatz}[satz]{Hilfssatz}
+\newtheorem{kor}[satz]{Korollar}
+
+\theorembodyfont{\upshape}
+\newtheorem{beispiel}[satz]{Beispiel}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{definition}[satz]{Definition} %[section]
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\normalfont}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{_\blacksquare}}
+\newtheorem{beweis}{Beweis}
+\qedsymbol{\ensuremath{_\blacksquare}}
+%\theoremclass{LaTeX}
+%
+% Ende ntheorem
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\pagestyle{empty}
+%
+% Ändern der bedruckten Fläche der Seite
+% \addtolength{\textwidth}{3cm}  % Befehl mit zwei Argumenten
+% \addtolength{\textheight}{3cm}
+% \hoffset-2cm % verschiebt das Textfenster nach links
+% \voffset-5mm % verschiebt das Textfenster nach oben
+%
+\parindent=0pt %% keine Einzug zu Beginn von Abs\"atzen
+\parskip=0.5mm   %% erzeugt einen zusätzliche Zeilenabstand zwischen
+                %% Absätzen. Nötig bei \parindent=0pt
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ermöglicht, farbigen Text zu drucken.
+\usepackage{color}
+% Und nun werden die Farben definiert - daran können Sie nach Belieben selber rumspielen.
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{darkred}{rgb}{0.3,0,0}
+\definecolor{darkgreen}{rgb}{0,0.3,0}
+\definecolor{darkblue}{rgb}{0,0,0.3}
+\definecolor{pink}{rgb}{0.78,0.09,0.51}
+\definecolor{purple}{rgb}{0.28,0.24,0.55}
+\definecolor{orange}{rgb}{1,0.6,0.0}
+\definecolor{grey}{rgb}{0.4,0.4,0.4}
+\definecolor{aquamarine}{rgb}{0.4,0.8,0.65}
+
+
+\DeclareMathOperator{\GL}{GL} % einige Macro, siehe am Ende Abschn. 2
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cP}{{\mathcal P}}
+\newcommand{\bO}[1]{\mathcal O(#1)}
+\newcommand{\bT}[1]{\Theta (#1)}
+\newcommand{\bOg}[1]{\Omega (#1)}
+
+% Code-Macro, wenn man mal etwas als Code highlighten möchte
+\newcommand{\code}[1]{\lstinline[basicstyle=\ttfamily\color{black}]{#1}}
+
+\begin{document}
+
+\author{Dennis Hempfing, Sebastian Koall}
+\title{Übung 11}
+\date{} 
+\pagestyle{myheadings}
+\markright{\hfill Dennis Hempfing, Sebastian Koall}
+
+\maketitle % erzeugt den Kopf
+
+\section*{Aufgabe 4}
+
+\end{document}

@@ -104,4 +104,42 @@
 
 \section*{Aufgabe 3}
 
+\subsection*{a)}
+Um zu zeigen, dass es Graphen mit negativen Kanten ohne Zyklen gibt, welche Dijkstra nicht richtig lösen kann, konstruieren wir den Graphen $G$ wie folgt:
+\vspace{0.1cm}
+
+$G=(V,E)$
+
+$V={A,B,C,D}$
+
+$E={{A,B},{A,C},{B,D},{C,D}}$
+
+\vspace{0.3cm}
+Eine Gewichtsfunktion w:
+\vspace{0.1cm}
+
+$w({A,B})=2, w({A,C})=5, w({B,D})=2, w({C,D})=-5 $
+
+\vspace{0.4cm}
+Und gehen in folgenden Beispiel von A als Startknoten aus:
+\vspace{0.1cm}
+
+\begin{tabular}{p{1cm}p{2cm}p{2cm}p{2cm}l}
+	  & A & B & C & D\\
+	1 & 0 & $\infty$ & $\infty$ & $\infty$\\
+	2 (A) & 0 & 2 & 5 & $\infty$\\
+	3 (B) & 0 & 2 & 5 & 4\\
+	4 (D) & 0 & 2 & -1 & 4\\
+	5 (C) & 0 & 2 & -1 & 4\\
+\end{tabular}
+\vspace{0.4cm}
+
+Für den Knoten D produziert Dijkstra eine falsche Distanz, sie müsste eigentlich 0 betragen (Pfad \{A,C,D\}). Der Dijkstra-Algorithmus sucht in jedem Schritt den Knoten mit der geringsten Distanz, entfernt ihn aus der Knotenmenge und aktualisiert für jeden Nachbarknoten, der noch in der Knotenmenge ist, die Distanz. In Schritt 4 wird in unserem Beispiel D bereits aus der Knotenmenge entfernt, in Schritt 5 müsste die Distanz für diesen Knoten noch einmal angepasst werden.
+
+Wir haben an unserem gerichteten, zyklenfreien Graphen G gezeigt, dass der Dijkstra-Algorithmus für Graphen mit negativen Kanten nicht immer richtige Ergebnisse liefert.
+
+$\hfill \square $
+
+\subsection*{b)}
+
 \end{document}

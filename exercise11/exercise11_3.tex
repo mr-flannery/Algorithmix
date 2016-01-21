@@ -11,7 +11,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[boxruled]{algorithm2e}
+\usepackage[plain]{algorithm2e}
 \usepackage{parskip}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
 \usepackage[utf8]{inputenc}  % für Unix-Systeme
@@ -146,7 +146,7 @@ Ein Algorithmus zum Finden kürzester Weg mit negativen Kantengewichten ohne Zyk
 \subsubsection*{Algorithmus}
 \begin{algorithm}[H]
 	\LinesNumbered
-	\caption{BellmanFord(G, Gewicht, start, end)}
+	\TitleOfAlgo{BellmanFord(G, Gewicht, start, end)}
 	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
 	
 	\Input{kantengewichteter Graph $G=(V,E)$, Kantengewichte,\\Startknoten $start \in V$, Endknoten $end \in V$}

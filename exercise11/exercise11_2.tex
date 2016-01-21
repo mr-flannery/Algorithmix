@@ -106,23 +106,29 @@
 
 \subsection*{Teilaufgabe a)}
 
-\paragraph{Eingabe:}
-\paragraph{Ausgabe:}
-\paragraph{Korrektheit:}
-\paragraph{Interpretation:}
+\paragraph{Anname:} Beim Finden einer Lösung für dieses Problem werden Kanten zwischen zwei Knoten gelöscht, wenn ein kürzer Pfad hinzugefügt wird, sodass die Kantenmenge am Ende nur die Kanten beinhaltet, die das optimale Streckennetz ergeben. (In der Realität zum Beispiel umgesetzt durch Stilllegungen.)
+\paragraph{Eingabe:} ungerichteter, zusammenhängender Graph G=(V,E), \\Gewichtsfunktion w: E $\rightarrow \Q ^+$
+\paragraph{Ausgabe:} ungerichteter, zusammenhängender Graph G'=(V',E')
+\paragraph{Korrektheit:} $|V'| \ge |V| \wedge \forall G''=(V'', E''): |V''| \ge |V|: \sum_{e' \in E'}^{}w(e') \le \sum_{e'' \in E''}^{}w(e'') \wedge \sum_{e' \in E'}^{}w(e') < \sum_{e \in E}^{}w(e)$
+\paragraph{Interpretation:} G ist das bisher vorhandene Streckennetz zwischen den einzelnen Städten. w ist die Gewichtungsfunktion, die jeder Kante aus E ein Gewicht aus den positiven Rationalen Zahlen zuweist. G' ist der errechnete Graph. G' ist eine valide Lösung, wenn die Knotenmenge V' aus G' mindestens genauso viele Knoten wie V aus G enthält und wenn die Summe der Kantengewichte der Kanten aus E' kleiner gleich der Summe der Kantengewichte der Kanten aus E ist.
 
 \subsection*{Teilaufgabe b)}
 
-\paragraph{Eingabe:}
-\paragraph{Ausgabe:}
-\paragraph{Korrektheit:}
+\paragraph{Eingabe:} ungerichteter, zusammenhängender Graph G(V,E), Gewichtsfunktion w: E $\rightarrow \Q ^+$
+\paragraph{Ausgabe:} $v \in V$
+\paragraph{Korrektheit:} $\exists v \forall v' \in V: v \not= v' \wedge \exists Pfad \ p = v,...,v': \forall Pfade \ p' = v,...,v':  \sum_{e' \in p'}^{}w(e) \ge \sum_{e \in p}^{}w(e) \\
+\forall v' \in V: v' \not= v : \forall v'' \in V: v'' \not= v': \exists Menge an MinPfaden P$
+
+Für alle v' in V ungleich v gilt, dass für alle v'' in V ungleich v' gilt, dass eine Menge an minimalen Pfaden von v'' nach v' exisitiert und die Summe der Kantengewichte diese Pfade größer gleich der Summe der Kantengewichte der von allen v' zu v führenden minimalen Pfaden ist.
+
 \paragraph{Interpretation:}
+
 
 \subsection*{Teilaufgabe c)}
 
-\paragraph{Eingabe:}
-\paragraph{Ausgabe:}
-\paragraph{Korrektheit:}
+\paragraph{Eingabe:} Menge $S \subset \{A-Z\}^*$
+\paragraph{Ausgabe:} $w \in \{A-Z\}^*$
+\paragraph{Korrektheit:} $\exists w \in \{A-Z\}^*: \forall a \in S \ \exists v,x \in \{A-Z\}^*: a = vwx \wedge |v| \ge 0, |x| \ge 0, |w| \ge 1: \forall w' \in \{A-Z\}^*: a = vw'x \wedge  |w'| \le |w|$
 \paragraph{Interpretation:}
 
 \subsection*{Teilaufgabe d)}

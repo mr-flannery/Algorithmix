@@ -110,15 +110,15 @@ Um zu zeigen, dass es Graphen mit negativen Kanten ohne Zyklen gibt, welche Dijk
 
 $G=(V,E)$
 
-$V={A,B,C,D}$
+$V=\{A,B,C,D\}$
 
-$E={{A,B},{A,C},{B,D},{C,D}}$
+$E=\{\{A,B\},\{A,C\},\{B,D\},\{C,D\}\}$
 
 \vspace{0.3cm}
 Eine Gewichtsfunktion w:
 \vspace{0.1cm}
 
-$w({A,B})=2, w({A,C})=5, w({B,D})=2, w({C,D})=-5 $
+$w(\{A,B\})=2, w(\{A,C\})=5, w(\{B,D\})=2, w(\{C,D\})=-5 $
 
 \vspace{0.4cm}
 Und gehen in folgenden Beispiel von A als Startknoten aus:
@@ -141,5 +141,63 @@ Wir haben an unserem gerichteten, zyklenfreien Graphen G gezeigt, dass der Dijks
 $\hfill \square $
 
 \subsection*{b)}
+Ein Algorithmus zum Finden kürzester Weg mit negativen Kantengewichten ohne Zyklen ist der Bellman-Ford-Algorithmus.
+
+\subsubsection*{Algorithmus}
+\begin{algorithm}[H]
+	\LinesNumbered
+	\caption{BellmanFord(G, Gewicht, start, end)}
+	\SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+	
+	\Input{kantengewichteter Graph $G=(V,E)$, Kantengewichte,\\Startknoten $start \in V$, Endknoten $end \in V$}
+	\Output{Distanz}
+	
+	\BlankLine
+	\BlankLine
+	
+	Distanz = new Map(V, $\R$)\;
+	Vorgaenger = new Map(V, V)\;
+	
+	\ForEach{v in V} {
+		Distanz(v) = $\infty$\;
+		Vorgaenger(v) = null\;		
+	}
+	Distanz(start) = 0\;
+	
+	\BlankLine
+	\BlankLine
+	
+	\For{(int i = 1; i < V.size() - 1; ++i)} {
+		\ForEach{\{v1, v2\} in E} {
+			\If{(Distanz(v1) + Gewicht(v1,v2) < Distanz(v2))} {
+				Distanz(v2) = Distanz(v1) + Gewicht(v1,v2)\;
+				Vorgaenger(v) = u\;
+			}
+		}
+	}
+	
+	\BlankLine
+	\BlankLine
+	
+	\ForEach{\{v1, v2\} in E} {
+		\If{(Distanz(v1) + Gewicht(v1,v2) < Distanz(v2))} {
+			Assert(false, ''Zyklus mit negativen Gewicht gefunden.'')\;
+		}
+	}
+	
+	\BlankLine
+	
+	return Distanz(end)\;
+\end{algorithm}
+
+\newpage
+
+\subsubsection*{Korrektheit}
+Durch den Ausschluss von Zyklen mit negativen Kantengewichten, wird verhindert, dass die Distanz innerhalb eines Zykluses beliebig abnehmen kann.
+
+Für den Startknoten ist sichergestellt, dass Bellman-Ford die kürzeste Distanz findet. Der Algorithmus iteriert der Reihe nach über alle Knoten. Wir wissen durch die Abfrage $Distanz(v1) + Gewicht(v1,v2) < Distanz(v2)$, dass stets gilt: $Distanz(v_i) \le Distanz(v_{i-1} + Gewicht(v_i, v_{i-1}))$. Jeder Knoten v2, welcher mit einem Knoten v2 verbunden ist, wird einmal in Betracht gezogen, für die kürzeste Distanz. Der Fall $Distanz(v_i) < Distanz(v_{i-1} + Gewicht(v_i, v_{i-1}))$ tritt deshalb niemals ein. Darum ergibt sich sich für jeden Knoten die minimale Distanz $Distanz(v_i) = Distanz(v_{i-1} + Gewicht(v_i, v_{i-1}))$.
+
+\subsubsection*{Laufzeit}
+Ausgehend von einem Startknoten, berechnen wir für alle Kanten außer dem Startknoten, ob es eine Kante gibt, über welche sich der betrachtete Knoten schneller erreichen lässt. Aus diesen Schleifen ergibt sich für eine Knotenzahl n und einen Kantenzahl m eine Worst-Case-Laufzeit von $\bO{n*m}$ für eine Strecke von einem Start- zu einem Endknoten.
 
 \end{document}

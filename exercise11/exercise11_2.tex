@@ -116,7 +116,7 @@
 
 \paragraph{Eingabe:} ungerichteter, zusammenhängender Graph G(V,E), Gewichtsfunktion w: E $\rightarrow \Q ^+$
 \paragraph{Ausgabe:} $v \in V$
-\paragraph{Korrektheit:} $\exists v \forall v' \in V: v \not= v' \wedge \exists Pfad \ p = v,...,v': \forall Pfade \ p' = v,...,v':  \sum_{e' \in p'}^{}w(e) \ge \sum_{e \in p}^{}w(e) \wedge \forall v' \in V: v' \not= v : \sum_{p_v  \in P_v}{w(p_v)} < \sum_{p_{v'} \in P_{v'}}{w(p_{v'})}$
+\paragraph{Korrektheit:} $\exists v \forall v' \in V: v \not= v' \wedge \exists Pfad \ p = v,...,v': \forall Pfade \ p' = v,...,v' \wedge p \not= p':  \sum_{e' \in p'}^{}w(e) \ge \sum_{e \in p}^{}w(e) \wedge \forall v' \in V: v' \not= v : \sum_{p_v  \in P_v}{w(p_v)} < \sum_{p_{v'} \in P_{v'}}{w(p_{v'})}$
 
 \paragraph{Interpretation:}
 Der Knoten $v$ ist Hauptstadt und die Pfade von $v$ zu einem beliebigen von $v$ verschiedenen Knoten haben stets die minimal mögliche Länge. Außerdem gibt keine Knoten $v'$, für den gilt: Die Summe aller Kantengewichte auf den verschiedenen Pfaden ist kleiner als die Summe aller Kantengewichte der Pfade von $v$.
@@ -128,12 +128,5 @@ Der Knoten $v$ ist Hauptstadt und die Pfade von $v$ zu einem beliebigen von $v$ 
 \paragraph{Korrektheit:} $\exists w \in \{A-Z\}^*: \forall a \in S \ \exists v,x \in \{A-Z\}^*: a = vwx \wedge |v| \ge 0, |x| \ge 0, |w| \ge 1: \forall w' \in \{A-Z\}^*: a = vw'x \wedge  |w'| \le |w|$
 \paragraph{Interpretation:}
 In einer Menge von Eingabestrings $S$ soll die längste gemeinsame Sequenz $w$ an Buchstaben gesucht werden. Es existiert also ein String $w$, welcher sich in allen Wörtern $a$ aus $S$ befindet. Gleichzeitig gilt: Gibt es eine Wortsequenz $w'$, welche in allen Wörtern vorkommt, so ist $w$ stets länger als $w'$.
-
-\subsection*{Teilaufgabe d)}
-
-\paragraph{Eingabe:}
-\paragraph{Ausgabe:} Personenzahl $P \in \N^+$
-\paragraph{Korrektheit:}
-\paragraph{Interpretation:}
 
 \end{document}

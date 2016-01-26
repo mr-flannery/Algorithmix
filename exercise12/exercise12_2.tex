@@ -95,7 +95,7 @@
 \begin{document}
 
 \author{Dennis Hempfing, Sebastian Koall}
-\title{Übung 11}
+\title{Übung 12}
 \date{} 
 \pagestyle{myheadings}
 \markright{\hfill Dennis Hempfing, Sebastian Koall}
@@ -104,5 +104,9 @@
 
 \section*{Aufgabe 2}
 
+Der in der Übung vorgestellte Algorithmus ist die \code{FirstFit} Approximation für {\sc BinPacking}.
+Durch Widerspruch soll hier bewiesen werden, dass es sich dabei um eine 2-Approximation für {\sc BinPacking} handelt.
+
+Angenommen der Algorithmus gibt mehr als 2OPT Bins zurück. Betracht man zwei beliebige aufeinanderfolgende Bins, und muss die Füllmenge der beiden Bins zusammen größer als 1 sein, da sonst ein einziger Bin gereicht hätte. Es gibt insgesamt also OPT Paare von Bins sowie beliebig viele weitere Bins, also ist die Summer der Füllmengen größer als OPT. Dies ist ein Widerspruch, der Algorithmus kann also nicht mehr also 2OPT Bins zurückgeben, womit er eine 2-Approximation ist.
 
 \end{document}

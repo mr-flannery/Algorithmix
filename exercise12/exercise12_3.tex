@@ -11,7 +11,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[plain]{algorithm2e}
+\usepackage[boxed]{algorithm2e}
 \usepackage{parskip}
  % Einstellungen, wenn man deutsch schreiben will, z.B. Trennregeln
 \usepackage[utf8]{inputenc}  % für Unix-Systeme
@@ -104,5 +104,64 @@
 
 \section*{Aufgabe 3}
 
+\paragraph{Eingabe:}Array c $\in \{true, false\}^+$ der Länge n, Array o $\in \{and, or, xor\}^+$ der Länge n-1
+\paragraph{Ausgabe:} natürliche Zahl b
+\paragraph{Korrektheit:} Sei Count(1,n) die Anzahl der Möglichkeiten den Bool'schen Ausdruck zu klammern. Die Ausgabe ist Korrekt, wenn die Anzahl der Möglichkeiten den Ausdruck zu klammern, sodass er zu \code{true} evaluiert, genau b entspricht.
+\paragraph{Interpretation:} Das Array c sind die im Bool'schen Ausdruck vorkommenden Konstanten, das Array o die vorkommenden Operatoren, sortiert nach ihrer Position im Ausdruck. n ist die Anzahl an Möglichkeiten den Bool'schen Ausdruck zu klammern, sodass er zu \code{true} evaluiert.
+
+\subsection*{Lösung}
+
+\paragraph{Idee:}
+
+\begin{algorithm}
+	\SetKwInOut{Input}{Eingabe}
+	\SetKwInOut{Output}{Ausgabe}
+	
+	\caption{TrueKlammern}
+	
+	\Input{Array symb $\in \{T,F\}^+$ der Länge $n$, Array ops $\in \{and, or, xor\}^+$ der Länge n-1}
+	\Output{natürliche Zahl}
+	f = new Matrix[n][n]\;
+	t = new Matrix[n][n]\;
+	
+	\For{i from 1 to n}{
+		\If{symb[i] == 'T'}{\
+			f[i][i] = 0\;
+			t[i][i] = 1\;
+		}\Else {\
+			f[i][i] = 1\;
+			t[i][i] = 0\;	
+		}	
+	}
+	\For{gap from 1 to n}{
+		i = 0\;
+		\For{j from gap to n}{
+			t[i][j] = f[i][j] = 0\;
+			\For{g from 1 to gap}{
+				k = i + g;
+				tik = t[i][k] + f[i][k]\;
+				tkj = t[k+1][j] + f[k+1][j]\;
+				
+				\If{ops[k] == "and"}{\
+					t[i][j] += t[i][k] * t[k+1][j]\;
+					f[i][j] += tik*tkj - t[i][k] * t[k+1][j]\;
+				}
+				\If{ops[k] == "or"}{\
+					t[i][j] += t[i][k] * f[k+1][j]\;
+					f[i][j] += tik*tkj - f[i][k] * f[k+1][j]\;
+				}
+				\If{ops[k] == "xor"}{\
+					t[i][j] += f[i][k] * t[k+1][j] + t[i][k] * f[k+1][j]\;
+					f[i][j] += t[i][k] * t[k+1][j] + f[i][k] * f[k+1][j]\;
+				}				
+			}
+			i += 1\;
+		}
+	}
+\end{algorithm}
+
+\paragraph{Korrektheit:}
+
+\paragraph{Laufzeit:}
 
 \end{document}
